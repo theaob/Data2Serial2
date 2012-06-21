@@ -423,6 +423,7 @@
             this.openPortButton.TabIndex = 5;
             this.openPortButton.Text = "Open Port";
             this.openPortButton.UseVisualStyleBackColor = true;
+            this.openPortButton.Click += new System.EventHandler(this.openPortButton_Click);
             // 
             // groupBox5
             // 

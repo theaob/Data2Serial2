@@ -31,6 +31,8 @@ namespace Data2Serial2
             InitializeComponent();
             changeTitle(version);
             addToList("Application ("+version+") opened");
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -204,6 +206,11 @@ namespace Data2Serial2
                 return false;
             }
             return true;
+        }
+
+        private void openPortButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
