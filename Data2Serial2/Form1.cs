@@ -19,13 +19,13 @@ namespace Data2Serial2
         private SerialPort port = new SerialPort();
 
         private LinkedList<String> linesRead = new LinkedList<string>();
-        private LinkedList<byte[]> hexLines = new LinkedList<byte[]>();
+        private LinkedList<byte[]> byteLines = new LinkedList<byte[]>();
         private String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 
         //Used Variables
 
-        private int manualRepeat;
+        private int manualRepeat = 1;
         public Form1()
         {
             InitializeComponent();
@@ -60,13 +60,13 @@ namespace Data2Serial2
                 while ((line = tr.ReadLine()) != null)
                 {
                     linesRead.AddLast(line);
-                    hexLines.AddLast(StringToByteArray(line));
-                    addToList(line);
+                    byteLines.AddLast(StringToByteArray(line));
                 }
 
                 tr.Close();
-            }
 
+                progressBar1.Maximum = linesRead.Count;
+            }
             catch (System.IO.IOException)
             {
                 showError("Couldn't read selected file!");
@@ -129,6 +129,15 @@ namespace Data2Serial2
                 tabControl1.SelectedIndex = 0;
                 return;
             }
+
+            if (fileDumpThread.IsBusy)
+            {
+                fileDumpThread.CancelAsync();
+            }
+            else
+            {
+                fileDumpThread.RunWorkerAsync();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -160,10 +169,9 @@ namespace Data2Serial2
                 sendThis = sendThis.Replace(" ", "");
             }
 
-            for (int i = 0; i < manualRepeat; i++ )
+            if (!manualSendThread.IsBusy)
             {
-                addToList(sendThis);
-                dropStringOnLine(sendThis);
+                manualSendThread.RunWorkerAsync(sendThis);
             }
         }
 
@@ -190,9 +198,13 @@ namespace Data2Serial2
             }
         }
 
-        //private void addToListSecure(String text)
-        //{
-        //}
+        private void addToListSecure(String text)
+        {
+            Invoke((MethodInvoker)(() =>
+                        {
+                            addToList(text);
+                        }));
+        }
 
         private static bool IsItAPositiveNumber(String numberString, out int parseIntoThis)
         {
@@ -386,5 +398,54 @@ namespace Data2Serial2
         {
             port.Write(output);
         }
+
+        private void manualSendThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 0; i < manualRepeat; i++)
+            {
+                addToListSecure(e.Argument.ToString());
+                dropStringOnLine(e.Argument.ToString());
+            }
+        }
+
+        private void fileDumpThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int progress = 0;
+            foreach (String sendThis in linesRead)
+            {
+                if (fileDumpThread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                port.Write(sendThis);
+                addToListSecure("Sent : " + sendThis);
+                fileDumpThread.ReportProgress(progress++);
+            }
+        }
+
+        private void fileDumpThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            //progressBar1.PerformStep();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (fileDumpThread.IsBusy)
+            {
+                fileDumpThread.CancelAsync();
+            }
+            else if (manualSendThread.IsBusy)
+            {
+                manualSendThread.CancelAsync();
+            }
+            else if (receiveThread.IsBusy)
+            {
+                receiveThread.CancelAsync();
+            }
+        }
+
+
     }
 }
