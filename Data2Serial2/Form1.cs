@@ -124,11 +124,21 @@ namespace Data2Serial2
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
+            
             String sendThis = manualSendCommandBox.Text;
             if (sendThis.Length < 1 || sendThis == null)
             {
@@ -149,8 +159,12 @@ namespace Data2Serial2
             {
                 sendThis = sendThis.Replace(" ", "");
             }
-            
-            addToList(sendThis);
+
+            for (int i = 0; i < manualRepeat; i++ )
+            {
+                addToList(sendThis);
+                dropStringOnLine(sendThis);
+            }
         }
 
         private void manualSendRepeatBox_Enter(object sender, EventArgs e)
@@ -213,88 +227,126 @@ namespace Data2Serial2
             if (port.IsOpen)
             {
                 port.Close();
+                openPortButton.Text = "Open Port";
+                groupBox5.Enabled = true;
+                groupBox6.Enabled = true;
+                groupBox7.Enabled = true;
+                label1.Enabled = true;
+                label2.Enabled = true;
+                baudRateComboBox.Enabled = true;
+                portComboBox.Enabled = true;
+                scanPortButton.Enabled = true;
+                return;
             }
 
-            int baudRate = 9600;
-            if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+            try
             {
-                port.BaudRate = baudRate;
-            }
 
-            switch (parityComboBox.SelectedItem.ToString())
+                int baudRate = 9600;
+                if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+                {
+                    port.BaudRate = baudRate;
+                }
+
+                switch (parityComboBox.SelectedItem.ToString())
+                {
+                    case "None":
+                        {
+                            port.Parity = Parity.None;
+                            break;
+                        }
+                    case "Odd":
+                        {
+                            port.Parity = Parity.Odd;
+                            break;
+                        }
+                    case "Even":
+                        {
+                            port.Parity = Parity.Even;
+                            break;
+                        }
+                    case "Mark":
+                        {
+                            port.Parity = Parity.Mark;
+                            break;
+                        }
+                    case "Space":
+                        {
+                            port.Parity = Parity.Space;
+                            break;
+                        }
+                }
+
+                switch (dataBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.DataBits = 8;
+                            break;
+                        }
+                    case 1:
+                        {
+                            port.DataBits = 7;
+                            break;
+                        }
+                    case 2:
+                        {
+                            port.DataBits = 6;
+                            break;
+                        }
+                    case 3:
+                        {
+                            port.DataBits = 5;
+                            break;
+                        }
+                }
+
+                switch (stopBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.StopBits = StopBits.None;
+                            break;
+                        }
+                    case 1: { port.StopBits = StopBits.One; break; }
+                    case 2: { port.StopBits = StopBits.OnePointFive; break; }
+                    case 3: { port.StopBits = StopBits.Two; break; }
+                }
+
+                port.PortName = portComboBox.SelectedItem.ToString();
+            
+                port.Open();
+                openPortButton.Text = "Close Port";
+
+                addToList(port.PortName + " is open!");
+                //tabControl1.Enabled = false;
+                //groupBox4.E
+                groupBox5.Enabled = false;
+                groupBox6.Enabled = false;
+                groupBox7.Enabled = false;
+                label1.Enabled = false;
+                label2.Enabled = false;
+                baudRateComboBox.Enabled = false;
+                portComboBox.Enabled = false;
+                scanPortButton.Enabled = false;
+                //openPortButton.Enabled = true;
+                tabControl1.SelectedIndex = 1;
+            }
+            catch (InvalidOperationException)
             {
-                case "None":
-                    {
-                        port.Parity = Parity.None;
-                        break;
-                    }
-                case "Odd":
-                    {
-                        port.Parity = Parity.Odd;
-                        break;
-                    }
-                case "Even":
-                    {
-                        port.Parity = Parity.Even;
-                        break;
-                    }
-                case "Mark":
-                    {
-                        port.Parity = Parity.Mark;
-                        break;
-                    }
-                case "Space":
-                    {
-                        port.Parity = Parity.Space;
-                        break;
-                    }
+                showError("Couldn't open port. Please check your settings.");
             }
-
-            switch (dataBitsComboBox.SelectedIndex)
+            catch (ArgumentOutOfRangeException)
             {
-                case 0:
-                    {
-                        port.DataBits = 8;
-                        break;
-                    }
-                case 1:
-                    {
-                        port.DataBits = 7;
-                        break;
-                    }
-                case 2:
-                    {
-                        port.DataBits = 6;
-                        break;
-                    }
-                case 3:
-                    {
-                        port.DataBits = 5;
-                        break;
-                    }
+                showError("Couldn't open port. Please check your settings.");
             }
-
-            switch (stopBitsComboBox.SelectedIndex)
-            {
-                case 0:
-                    {
-                        port.StopBits = StopBits.None;
-                        break;
-                    }
-                case 1: { port.StopBits = StopBits.One; break; }
-                case 2: { port.StopBits = StopBits.OnePointFive; break; }
-                case 3: { port.StopBits = StopBits.Two; break; }
-            }
-
-
-            port.Open();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             loadPortsIntoCombobox();
             baudRateComboBox.SelectedIndex = 0;
-            stopBitsComboBox.SelectedIndex = 0;
+            stopBitsComboBox.SelectedIndex = 1;
             dataBitsComboBox.SelectedIndex = 0;
             parityComboBox.SelectedIndex = 0;
             
@@ -328,6 +380,11 @@ namespace Data2Serial2
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             listBox1.Items.Clear();
+        }
+
+        private void dropStringOnLine(String output)
+        {
+            port.Write(output);
         }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TabPage tabPage1;
-            System.Windows.Forms.TabPage tabPage5;
-            System.Windows.Forms.TabPage tabPage4;
+            System.Windows.Forms.TabPage sendTab;
+            System.Windows.Forms.TabPage settingsTab;
+            System.Windows.Forms.TabPage comPortTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -64,17 +64,18 @@
             this.stopBitsComboBox = new System.Windows.Forms.ComboBox();
             this.dataBitsComboBox = new System.Windows.Forms.ComboBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            tabPage1 = new System.Windows.Forms.TabPage();
-            tabPage5 = new System.Windows.Forms.TabPage();
-            tabPage4 = new System.Windows.Forms.TabPage();
-            tabPage1.SuspendLayout();
+            this.manualSendThread = new System.ComponentModel.BackgroundWorker();
+            sendTab = new System.Windows.Forms.TabPage();
+            settingsTab = new System.Windows.Forms.TabPage();
+            comPortTab = new System.Windows.Forms.TabPage();
+            sendTab.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            tabPage4.SuspendLayout();
+            comPortTab.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -88,15 +89,15 @@
             this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabPage1
+            // sendTab
             // 
-            tabPage1.Controls.Add(this.splitContainer2);
-            tabPage1.Location = new System.Drawing.Point(4, 22);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Size = new System.Drawing.Size(345, 128);
-            tabPage1.TabIndex = 3;
-            tabPage1.Text = "Send";
-            tabPage1.UseVisualStyleBackColor = true;
+            sendTab.Controls.Add(this.splitContainer2);
+            sendTab.Location = new System.Drawing.Point(4, 22);
+            sendTab.Name = "sendTab";
+            sendTab.Size = new System.Drawing.Size(345, 128);
+            sendTab.TabIndex = 3;
+            sendTab.Text = "Send";
+            sendTab.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -142,6 +143,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(6, 21);
             this.comboBox1.Name = "comboBox1";
@@ -250,24 +252,24 @@
             this.manualSendCommandBox.Size = new System.Drawing.Size(158, 20);
             this.manualSendCommandBox.TabIndex = 0;
             // 
-            // tabPage5
+            // settingsTab
             // 
-            tabPage5.Location = new System.Drawing.Point(4, 22);
-            tabPage5.Name = "tabPage5";
-            tabPage5.Size = new System.Drawing.Size(348, 128);
-            tabPage5.TabIndex = 2;
-            tabPage5.Text = "Settings";
-            tabPage5.UseVisualStyleBackColor = true;
+            settingsTab.Location = new System.Drawing.Point(4, 22);
+            settingsTab.Name = "settingsTab";
+            settingsTab.Size = new System.Drawing.Size(345, 128);
+            settingsTab.TabIndex = 2;
+            settingsTab.Text = "Settings";
+            settingsTab.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
+            // comPortTab
             // 
-            tabPage4.Controls.Add(this.splitContainer3);
-            tabPage4.Location = new System.Drawing.Point(4, 22);
-            tabPage4.Name = "tabPage4";
-            tabPage4.Size = new System.Drawing.Size(345, 128);
-            tabPage4.TabIndex = 1;
-            tabPage4.Text = "COM Port";
-            tabPage4.UseVisualStyleBackColor = true;
+            comPortTab.Controls.Add(this.splitContainer3);
+            comPortTab.Location = new System.Drawing.Point(4, 22);
+            comPortTab.Name = "comPortTab";
+            comPortTab.Size = new System.Drawing.Size(345, 128);
+            comPortTab.TabIndex = 1;
+            comPortTab.Text = "COM Port";
+            comPortTab.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -306,9 +308,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(tabPage4);
-            this.tabControl1.Controls.Add(tabPage1);
-            this.tabControl1.Controls.Add(tabPage5);
+            this.tabControl1.Controls.Add(comPortTab);
+            this.tabControl1.Controls.Add(sendTab);
+            this.tabControl1.Controls.Add(settingsTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.ItemSize = new System.Drawing.Size(58, 18);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -519,6 +521,10 @@
             this.linkLabel1.Text = "Clear";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // manualSendThread
+            // 
+            this.manualSendThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,7 +535,7 @@
             this.Name = "Form1";
             this.Text = "Data2Serial2";
             this.Load += new System.EventHandler(this.Form1_Load);
-            tabPage1.ResumeLayout(false);
+            sendTab.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
@@ -538,7 +544,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            tabPage4.ResumeLayout(false);
+            comPortTab.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -590,6 +596,7 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ComboBox parityComboBox;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.ComponentModel.BackgroundWorker manualSendThread;
 
 
     }
