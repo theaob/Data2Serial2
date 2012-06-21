@@ -22,6 +22,10 @@ namespace Data2Serial2
         private LinkedList<byte[]> hexLines = new LinkedList<byte[]>();
         private String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
+
+        //Used Variables
+
+        private int manualRepeat;
         public Form1()
         {
             InitializeComponent();
@@ -114,6 +118,74 @@ namespace Data2Serial2
         {
             comboBox1.Items.Insert(comboBox1.Items.Count, text);
             comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            String sendThis = manualSendCommandBox.Text;
+            if (sendThis.Length < 1 || sendThis == null)
+            {
+                return;
+            }
+
+            if (CRCheckBox.Checked)
+            {
+                sendThis += "\r";
+            }
+
+            if (LFCheckBox.Checked)
+            {
+                sendThis += "\n";
+            }
+
+            if (SpaceStripCheckBox.Checked)
+            {
+                sendThis = sendThis.Replace(" ", "");
+            }
+            
+            addToList(sendThis);
+        }
+
+        private void manualSendRepeatBox_Enter(object sender, EventArgs e)
+        {
+            if (manualSendRepeatBox.Text == "Repeats (0)" || manualSendRepeatBox.Text == "Integer Only")
+            {
+                manualSendRepeatBox.Text = "";
+            }
+        }
+
+        private void manualSendRepeatBox_Leave(object sender, EventArgs e)
+        {
+            if (manualSendRepeatBox.Text.Trim() == "")
+            {
+                manualSendRepeatBox.Text = "Repeats (0)";
+            }
+            else
+            {
+                try
+                {
+                    manualRepeat = int.Parse(manualSendRepeatBox.Text);
+                    if (manualRepeat < 0)
+                    {
+                        throw new FormatException();
+                    }
+                }
+                catch (FormatException)
+                {
+                    manualSendRepeatBox.Text = "Integer Only";
+                    return;
+                }
+                catch (OverflowException)
+                {
+                    manualSendRepeatBox.Text = "Integer Only";
+                    return;
+                }
+            }
         }
 
         //private void addToListSecure(String text)
