@@ -210,12 +210,28 @@ namespace Data2Serial2
 
         private void openPortButton_Click(object sender, EventArgs e)
         {
+            if (port.IsOpen)
+            {
+                port.Close();
+            }
 
+            int baudRate = 9600;
+            if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+            {
+                port.BaudRate = baudRate;
+            }
+
+            port.Open();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             loadPortsIntoCombobox();
+            baudRateComboBox.SelectedIndex = 0;
+            stopBitsComboBox.SelectedIndex = 0;
+            dataBitsComboBox.SelectedIndex = 0;
+            parityComboBox.SelectedIndex = 0;
+            
         }
 
         private void loadPortsIntoCombobox()
@@ -241,6 +257,11 @@ namespace Data2Serial2
         private void scanPortButton_Click(object sender, EventArgs e)
         {
             loadPortsIntoCombobox();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            listBox1.Items.Clear();
         }
     }
 }
