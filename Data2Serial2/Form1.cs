@@ -212,5 +212,30 @@ namespace Data2Serial2
         {
 
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            loadPortsIntoCombobox();
+        }
+
+        private void loadPortsIntoCombobox()
+        {
+            portComboBox.Items.Clear();
+            String[] ports = SerialPort.GetPortNames();
+            foreach (String portString in ports)
+            {
+                try
+                {
+                    port.PortName = portString;
+                    port.Open();
+                    portComboBox.Items.Add(portString);
+                    port.Close();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                }
+            }
+            portComboBox.SelectedIndex = 0;
+        }
     }
 }
