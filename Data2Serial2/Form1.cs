@@ -221,6 +221,72 @@ namespace Data2Serial2
                 port.BaudRate = baudRate;
             }
 
+            switch (parityComboBox.SelectedItem.ToString())
+            {
+                case "None":
+                    {
+                        port.Parity = Parity.None;
+                        break;
+                    }
+                case "Odd":
+                    {
+                        port.Parity = Parity.Odd;
+                        break;
+                    }
+                case "Even":
+                    {
+                        port.Parity = Parity.Even;
+                        break;
+                    }
+                case "Mark":
+                    {
+                        port.Parity = Parity.Mark;
+                        break;
+                    }
+                case "Space":
+                    {
+                        port.Parity = Parity.Space;
+                        break;
+                    }
+            }
+
+            switch (dataBitsComboBox.SelectedIndex)
+            {
+                case 0:
+                    {
+                        port.DataBits = 8;
+                        break;
+                    }
+                case 1:
+                    {
+                        port.DataBits = 7;
+                        break;
+                    }
+                case 2:
+                    {
+                        port.DataBits = 6;
+                        break;
+                    }
+                case 3:
+                    {
+                        port.DataBits = 5;
+                        break;
+                    }
+            }
+
+            switch (stopBitsComboBox.SelectedIndex)
+            {
+                case 0:
+                    {
+                        port.StopBits = StopBits.None;
+                        break;
+                    }
+                case 1: { port.StopBits = StopBits.One; break; }
+                case 2: { port.StopBits = StopBits.OnePointFive; break; }
+                case 3: { port.StopBits = StopBits.Two; break; }
+            }
+
+
             port.Open();
         }
 
