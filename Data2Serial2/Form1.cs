@@ -167,23 +167,9 @@ namespace Data2Serial2
             }
             else
             {
-                try
-                {
-                    manualRepeat = int.Parse(manualSendRepeatBox.Text);
-                    if (manualRepeat < 0)
-                    {
-                        throw new FormatException();
-                    }
-                }
-                catch (FormatException)
+                if (!IsItAPositiveNumber(manualSendRepeatBox.Text, out manualRepeat))
                 {
                     manualSendRepeatBox.Text = "Integer Only";
-                    return;
-                }
-                catch (OverflowException)
-                {
-                    manualSendRepeatBox.Text = "Integer Only";
-                    return;
                 }
             }
         }
@@ -191,5 +177,33 @@ namespace Data2Serial2
         //private void addToListSecure(String text)
         //{
         //}
+
+        private bool IsItAPositiveNumber(String numberString, out int parseIntoThis)
+        {
+            try
+            {
+                parseIntoThis = int.Parse(numberString);
+                if (parseIntoThis < 0)
+                {
+                    throw new FormatException();
+                }
+            }
+            catch (FormatException)
+            {
+                parseIntoThis = 0;
+                return false;
+            }
+            catch (OverflowException)
+            {
+                parseIntoThis = 0;
+                return false;
+            }
+            catch (ArgumentNullException)
+            {
+                parseIntoThis = 0;
+                return false;
+            }
+            return true;
+        }
     }
 }
