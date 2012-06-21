@@ -31,6 +31,8 @@ namespace Data2Serial2
             InitializeComponent();
             changeTitle(version);
             addToList("Application ("+version+") opened");
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -161,7 +163,7 @@ namespace Data2Serial2
 
         private void manualSendRepeatBox_Leave(object sender, EventArgs e)
         {
-            if (manualSendRepeatBox.Text.Trim() == "")
+            if (manualSendRepeatBox.Text.Trim().Length < 1)
             {
                 manualSendRepeatBox.Text = "Repeats (0)";
             }
@@ -178,11 +180,11 @@ namespace Data2Serial2
         //{
         //}
 
-        private bool IsItAPositiveNumber(String numberString, out int parseIntoThis)
+        private static bool IsItAPositiveNumber(String numberString, out int parseIntoThis)
         {
             try
             {
-                parseIntoThis = int.Parse(numberString);
+                parseIntoThis = int.Parse(numberString,null);
                 if (parseIntoThis < 0)
                 {
                     throw new FormatException();
@@ -204,6 +206,41 @@ namespace Data2Serial2
                 return false;
             }
             return true;
+        }
+
+        private void openPortButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            loadPortsIntoCombobox();
+        }
+
+        private void loadPortsIntoCombobox()
+        {
+            portComboBox.Items.Clear();
+            String[] ports = SerialPort.GetPortNames();
+            foreach (String portString in ports)
+            {
+                try
+                {
+                    port.PortName = portString;
+                    port.Open();
+                    portComboBox.Items.Add(portString);
+                    port.Close();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                }
+            }
+            portComboBox.SelectedIndex = 0;
+        }
+
+        private void scanPortButton_Click(object sender, EventArgs e)
+        {
+            loadPortsIntoCombobox();
         }
     }
 }
