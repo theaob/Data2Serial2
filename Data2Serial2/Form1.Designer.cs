@@ -413,16 +413,19 @@
             this.scanPortButton.TabIndex = 4;
             this.scanPortButton.Text = "Scan Ports";
             this.scanPortButton.UseVisualStyleBackColor = true;
+            this.scanPortButton.Click += new System.EventHandler(this.scanPortButton_Click);
             // 
             // openPortButton
             // 
             this.openPortButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.openPortButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.openPortButton.Location = new System.Drawing.Point(262, 41);
             this.openPortButton.Name = "openPortButton";
             this.openPortButton.Size = new System.Drawing.Size(75, 23);
             this.openPortButton.TabIndex = 5;
             this.openPortButton.Text = "Open Port";
             this.openPortButton.UseVisualStyleBackColor = true;
+            this.openPortButton.Click += new System.EventHandler(this.openPortButton_Click);
             // 
             // groupBox5
             // 
@@ -509,6 +512,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Data2Serial2";
+            this.Load += new System.EventHandler(this.Form1_Load);
             tabPage1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
