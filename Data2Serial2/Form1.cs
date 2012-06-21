@@ -19,13 +19,13 @@ namespace Data2Serial2
         private SerialPort port = new SerialPort();
 
         private LinkedList<String> linesRead = new LinkedList<string>();
-        private LinkedList<byte[]> hexLines = new LinkedList<byte[]>();
+        private LinkedList<byte[]> byteLines = new LinkedList<byte[]>();
         private String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 
         //Used Variables
 
-        private int manualRepeat;
+        private int manualRepeat = 1;
         public Form1()
         {
             InitializeComponent();
@@ -60,13 +60,13 @@ namespace Data2Serial2
                 while ((line = tr.ReadLine()) != null)
                 {
                     linesRead.AddLast(line);
-                    hexLines.AddLast(StringToByteArray(line));
-                    addToList(line);
+                    byteLines.AddLast(StringToByteArray(line));
                 }
 
                 tr.Close();
-            }
 
+                progressBar1.Maximum = linesRead.Count;
+            }
             catch (System.IO.IOException)
             {
                 showError("Couldn't read selected file!");
@@ -124,11 +124,30 @@ namespace Data2Serial2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
 
+            if (fileDumpThread.IsBusy)
+            {
+                fileDumpThread.CancelAsync();
+            }
+            else
+            {
+                fileDumpThread.RunWorkerAsync();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
+            
             String sendThis = manualSendCommandBox.Text;
             if (sendThis.Length < 1 || sendThis == null)
             {
@@ -149,8 +168,11 @@ namespace Data2Serial2
             {
                 sendThis = sendThis.Replace(" ", "");
             }
-            
-            addToList(sendThis);
+
+            if (!manualSendThread.IsBusy)
+            {
+                manualSendThread.RunWorkerAsync(sendThis);
+            }
         }
 
         private void manualSendRepeatBox_Enter(object sender, EventArgs e)
@@ -176,9 +198,13 @@ namespace Data2Serial2
             }
         }
 
-        //private void addToListSecure(String text)
-        //{
-        //}
+        private void addToListSecure(String text)
+        {
+            Invoke((MethodInvoker)(() =>
+                        {
+                            addToList(text);
+                        }));
+        }
 
         private static bool IsItAPositiveNumber(String numberString, out int parseIntoThis)
         {
@@ -213,22 +239,126 @@ namespace Data2Serial2
             if (port.IsOpen)
             {
                 port.Close();
+                openPortButton.Text = "Open Port";
+                groupBox5.Enabled = true;
+                groupBox6.Enabled = true;
+                groupBox7.Enabled = true;
+                label1.Enabled = true;
+                label2.Enabled = true;
+                baudRateComboBox.Enabled = true;
+                portComboBox.Enabled = true;
+                scanPortButton.Enabled = true;
+                return;
             }
 
-            int baudRate = 9600;
-            if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+            try
             {
-                port.BaudRate = baudRate;
-            }
 
-            port.Open();
+                int baudRate = 9600;
+                if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+                {
+                    port.BaudRate = baudRate;
+                }
+
+                switch (parityComboBox.SelectedItem.ToString())
+                {
+                    case "None":
+                        {
+                            port.Parity = Parity.None;
+                            break;
+                        }
+                    case "Odd":
+                        {
+                            port.Parity = Parity.Odd;
+                            break;
+                        }
+                    case "Even":
+                        {
+                            port.Parity = Parity.Even;
+                            break;
+                        }
+                    case "Mark":
+                        {
+                            port.Parity = Parity.Mark;
+                            break;
+                        }
+                    case "Space":
+                        {
+                            port.Parity = Parity.Space;
+                            break;
+                        }
+                }
+
+                switch (dataBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.DataBits = 8;
+                            break;
+                        }
+                    case 1:
+                        {
+                            port.DataBits = 7;
+                            break;
+                        }
+                    case 2:
+                        {
+                            port.DataBits = 6;
+                            break;
+                        }
+                    case 3:
+                        {
+                            port.DataBits = 5;
+                            break;
+                        }
+                }
+
+                switch (stopBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.StopBits = StopBits.None;
+                            break;
+                        }
+                    case 1: { port.StopBits = StopBits.One; break; }
+                    case 2: { port.StopBits = StopBits.OnePointFive; break; }
+                    case 3: { port.StopBits = StopBits.Two; break; }
+                }
+
+                port.PortName = portComboBox.SelectedItem.ToString();
+            
+                port.Open();
+                openPortButton.Text = "Close Port";
+
+                addToList(port.PortName + " is open!");
+                //tabControl1.Enabled = false;
+                //groupBox4.E
+                groupBox5.Enabled = false;
+                groupBox6.Enabled = false;
+                groupBox7.Enabled = false;
+                label1.Enabled = false;
+                label2.Enabled = false;
+                baudRateComboBox.Enabled = false;
+                portComboBox.Enabled = false;
+                scanPortButton.Enabled = false;
+                //openPortButton.Enabled = true;
+                tabControl1.SelectedIndex = 1;
+            }
+            catch (InvalidOperationException)
+            {
+                showError("Couldn't open port. Please check your settings.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                showError("Couldn't open port. Please check your settings.");
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             loadPortsIntoCombobox();
             baudRateComboBox.SelectedIndex = 0;
-            stopBitsComboBox.SelectedIndex = 0;
+            stopBitsComboBox.SelectedIndex = 1;
             dataBitsComboBox.SelectedIndex = 0;
             parityComboBox.SelectedIndex = 0;
             
@@ -263,5 +393,59 @@ namespace Data2Serial2
         {
             listBox1.Items.Clear();
         }
+
+        private void dropStringOnLine(String output)
+        {
+            port.Write(output);
+        }
+
+        private void manualSendThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 0; i < manualRepeat; i++)
+            {
+                addToListSecure(e.Argument.ToString());
+                dropStringOnLine(e.Argument.ToString());
+            }
+        }
+
+        private void fileDumpThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int progress = 0;
+            foreach (String sendThis in linesRead)
+            {
+                if (fileDumpThread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                port.Write(sendThis);
+                addToListSecure("Sent : " + sendThis);
+                fileDumpThread.ReportProgress(progress++);
+            }
+        }
+
+        private void fileDumpThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            //progressBar1.PerformStep();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (fileDumpThread.IsBusy)
+            {
+                fileDumpThread.CancelAsync();
+            }
+            else if (manualSendThread.IsBusy)
+            {
+                manualSendThread.CancelAsync();
+            }
+            else if (receiveThread.IsBusy)
+            {
+                receiveThread.CancelAsync();
+            }
+        }
+
+
     }
 }
