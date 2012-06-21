@@ -49,6 +49,17 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.baudRateComboBox = new System.Windows.Forms.ComboBox();
+            this.portComboBox = new System.Windows.Forms.ComboBox();
+            this.scanPortButton = new System.Windows.Forms.Button();
+            this.openPortButton = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             tabPage1 = new System.Windows.Forms.TabPage();
             tabPage5 = new System.Windows.Forms.TabPage();
             tabPage4 = new System.Windows.Forms.TabPage();
@@ -59,10 +70,15 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            tabPage4.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage1
@@ -238,6 +254,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(this.splitContainer3);
             tabPage4.Location = new System.Drawing.Point(4, 22);
             tabPage4.Name = "tabPage4";
             tabPage4.Size = new System.Drawing.Size(345, 137);
@@ -296,6 +313,125 @@
             // 
             this.openFileDialog1.Filter = "Text File (.txt)|*.txt|Log File (.log)|*.log|Other|*.*";
             // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.groupBox4);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.groupBox7);
+            this.splitContainer3.Panel2.Controls.Add(this.groupBox6);
+            this.splitContainer3.Panel2.Controls.Add(this.groupBox5);
+            this.splitContainer3.Size = new System.Drawing.Size(345, 137);
+            this.splitContainer3.SplitterDistance = 75;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.openPortButton);
+            this.groupBox4.Controls.Add(this.scanPortButton);
+            this.groupBox4.Controls.Add(this.portComboBox);
+            this.groupBox4.Controls.Add(this.baudRateComboBox);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(345, 75);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Baud Rate:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 46);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Port:";
+            // 
+            // baudRateComboBox
+            // 
+            this.baudRateComboBox.FormattingEnabled = true;
+            this.baudRateComboBox.Location = new System.Drawing.Point(75, 13);
+            this.baudRateComboBox.Name = "baudRateComboBox";
+            this.baudRateComboBox.Size = new System.Drawing.Size(121, 21);
+            this.baudRateComboBox.TabIndex = 2;
+            // 
+            // portComboBox
+            // 
+            this.portComboBox.FormattingEnabled = true;
+            this.portComboBox.Location = new System.Drawing.Point(75, 43);
+            this.portComboBox.Name = "portComboBox";
+            this.portComboBox.Size = new System.Drawing.Size(121, 21);
+            this.portComboBox.TabIndex = 3;
+            // 
+            // scanPortButton
+            // 
+            this.scanPortButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scanPortButton.Location = new System.Drawing.Point(262, 11);
+            this.scanPortButton.Name = "scanPortButton";
+            this.scanPortButton.Size = new System.Drawing.Size(75, 23);
+            this.scanPortButton.TabIndex = 4;
+            this.scanPortButton.Text = "Scan Ports";
+            this.scanPortButton.UseVisualStyleBackColor = true;
+            // 
+            // openPortButton
+            // 
+            this.openPortButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.openPortButton.Location = new System.Drawing.Point(262, 41);
+            this.openPortButton.Name = "openPortButton";
+            this.openPortButton.Size = new System.Drawing.Size(75, 23);
+            this.openPortButton.TabIndex = 5;
+            this.openPortButton.Text = "Open Port";
+            this.openPortButton.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(132, 58);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Parity";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox6.Location = new System.Drawing.Point(132, 0);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(110, 58);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Data Bits";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Location = new System.Drawing.Point(242, 0);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(103, 58);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Stop Bits";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,10 +450,16 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            tabPage4.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -341,6 +483,17 @@
         private System.Windows.Forms.CheckBox CRCheckBox;
         private System.Windows.Forms.TextBox manualSendRepeatBox;
         private System.Windows.Forms.CheckBox SpaceStripCheckBox;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox portComboBox;
+        private System.Windows.Forms.ComboBox baudRateComboBox;
+        private System.Windows.Forms.Button openPortButton;
+        private System.Windows.Forms.Button scanPortButton;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox6;
 
 
     }
