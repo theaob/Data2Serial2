@@ -37,6 +37,12 @@ namespace Data2Serial2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
+
             linesRead.Clear();
             openFileDialog1.FileName = "";
             openFileDialog1.ShowDialog();
@@ -171,6 +177,7 @@ namespace Data2Serial2
 
             if (!manualSendThread.IsBusy)
             {
+                progressBar2.Value = 0;
                 manualSendThread.RunWorkerAsync(sendThis);
             }
         }
@@ -401,10 +408,17 @@ namespace Data2Serial2
 
         private void manualSendThread_DoWork(object sender, DoWorkEventArgs e)
         {
+
+            Invoke((MethodInvoker)(() =>
+            {
+                progressBar2.Maximum = manualRepeat;
+            }));
+            int progress = 0;
             for (int i = 0; i < manualRepeat; i++)
             {
                 addToListSecure(e.Argument.ToString());
                 dropStringOnLine(e.Argument.ToString());
+                manualSendThread.ReportProgress(progress++);
             }
         }
 
@@ -427,7 +441,7 @@ namespace Data2Serial2
         private void fileDumpThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
-            //progressBar1.PerformStep();
+            progressBar1.PerformStep();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -444,6 +458,12 @@ namespace Data2Serial2
             {
                 receiveThread.CancelAsync();
             }
+        }
+
+        private void manualSendThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar2.Value = e.ProgressPercentage;
+            progressBar2.PerformStep();
         }
 
 
