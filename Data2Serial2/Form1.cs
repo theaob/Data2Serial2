@@ -58,6 +58,7 @@ namespace Data2Serial2
             String shortName = filename.Substring(filename.LastIndexOf('\\') + 1);
             addToFileList(shortName);
             changeTitle(shortName);
+            addToList("Selected " + shortName);
 
             try
             {
@@ -143,6 +144,7 @@ namespace Data2Serial2
             {
                 fileDumpThread.CancelAsync();
                 stopwatch.Stop();
+                button2.Text = "Send";
             }
             else
             {
@@ -159,6 +161,7 @@ namespace Data2Serial2
                 else
                 {
                     fileDumpThread.RunWorkerAsync();
+                    button2.Text = "Cancel";
                 }
             }
         }
@@ -201,10 +204,12 @@ namespace Data2Serial2
                 SpaceStripCheckBox.Enabled = false;
                 manualSendCommandBox.Enabled = false;
                 manualSendRepeatBox.Enabled = false;
+                button3.Text = "Cancel";
             }
             else
             {
                 manualSendThread.CancelAsync();
+                button3.Text = "Send";
             }
         }
 
@@ -557,6 +562,7 @@ namespace Data2Serial2
             SpaceStripCheckBox.Enabled = true;
             manualSendCommandBox.Enabled = true;
             manualSendRepeatBox.Enabled = true;
+            button3.Text = "Send";
         }
 
         private void fileDumpThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -566,6 +572,7 @@ namespace Data2Serial2
             button1.Enabled = true;
             groupBox8.Enabled = true;
             textBox1.Enabled = true;
+            button2.Text = "Send";
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
@@ -578,9 +585,38 @@ namespace Data2Serial2
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            if (textBox1.Text == null || textBox1.Text.Trim() == "")
+            if (String.IsNullOrEmpty(textBox1.Text.Trim()))
             {
                 textBox1.Text = "Delay";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (receiveThread.IsBusy)
+            {
+                receiveThread.CancelAsync();
+            }
+            else
+            {
+                receiveThread.RunWorkerAsync();
+            }
+        }
+
+        private void receiveThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                if (receiveThread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                String read = port.ReadLine();
+                if (!String.IsNullOrEmpty(read))
+                {
+                    addToListSecure(read);
+                }
             }
         }
 
