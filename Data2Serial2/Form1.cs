@@ -663,9 +663,20 @@ namespace Data2Serial2
 
         private void button5_Click(object sender, EventArgs e)
         {
+            //if(updateDialog.DialogResult
+            try
+            {
+                updateDialog.ShowDialog();
+            }
+            catch (ObjectDisposedException)
+            {
+                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             
-            updateDialog.ShowDialog();
-
             
         }
     }

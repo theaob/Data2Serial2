@@ -82,9 +82,21 @@ namespace Data2Serial2
             label1.Text = label1.Text.Replace("{{yourversion}}", thisVersion);
             label1.Text = label1.Text.Replace("{{newversion}}", onlineVersion);
 
-            System.Net.WebClient wc2 = new System.Net.WebClient();
-            wc2.DownloadStringCompleted += new System.Net.DownloadStringCompletedEventHandler(wc2_DownloadStringCompleted);
-            wc2.DownloadStringAsync(new Uri(changeLogLink));
+            System.Version thisVersionZ = new Version(thisVersion);
+            System.Version onlineVersionZ = new Version(onlineVersion);
+
+            if (thisVersionZ < onlineVersionZ)
+            {
+
+                System.Net.WebClient wc2 = new System.Net.WebClient();
+                wc2.DownloadStringCompleted += new System.Net.DownloadStringCompletedEventHandler(wc2_DownloadStringCompleted);
+                wc2.DownloadStringAsync(new Uri(changeLogLink));
+            }
+            else
+            {
+                MessageBox.Show("You have the latest version installed");
+                this.Dispose();
+            }
         }
 
         void wc2_DownloadStringCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
