@@ -498,15 +498,21 @@ namespace Data2Serial2
             }
             else if (sendAsByteRadioButton.Checked == true)
             {
+                stopwatch.Reset();
                 stopwatch.Start();
                 foreach (byte[] sendThis in byteLines)
                 {
+                    if (fileDumpThread.CancellationPending == true)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
                     while (true)
                     {
                         if (fileDumpThread.CancellationPending == true)
                         {
                             e.Cancel = true;
-                            return;
+                            break;
                         }
                         if (stopwatch.ElapsedMilliseconds == delay)
                         {
