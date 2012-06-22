@@ -24,6 +24,9 @@ namespace Data2Serial2
 
         private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
+        private Color cancelButtonColor = new Color();
+        private Color sendButtonColor = new Color();
+
 
         //Used Variables
 
@@ -144,7 +147,8 @@ namespace Data2Serial2
             {
                 fileDumpThread.CancelAsync();
                 stopwatch.Stop();
-                button2.Text = "Send";
+                //button2.Text = "Send";
+                //buttonTextyColorChange(button2);
             }
             else
             {
@@ -161,7 +165,8 @@ namespace Data2Serial2
                 else
                 {
                     fileDumpThread.RunWorkerAsync();
-                    button2.Text = "Cancel";
+                    //button2.Text = "Cancel";
+                    buttonTextyColorChange(button2);
                 }
             }
         }
@@ -204,12 +209,14 @@ namespace Data2Serial2
                 SpaceStripCheckBox.Enabled = false;
                 manualSendCommandBox.Enabled = false;
                 manualSendRepeatBox.Enabled = false;
-                button3.Text = "Cancel";
+                //button3.Text = "Cancel";
+                //button3.BackColor = Color.Red;
+                buttonTextyColorChange(button3);
             }
             else
             {
                 manualSendThread.CancelAsync();
-                button3.Text = "Send";
+                //button3.Text = "Send";
             }
         }
 
@@ -568,7 +575,8 @@ namespace Data2Serial2
             SpaceStripCheckBox.Enabled = true;
             manualSendCommandBox.Enabled = true;
             manualSendRepeatBox.Enabled = true;
-            button3.Text = "Send";
+            //button3.Text = "Send";
+            buttonTextyColorChange(button3);
         }
 
         private void fileDumpThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -578,7 +586,8 @@ namespace Data2Serial2
             button1.Enabled = true;
             groupBox8.Enabled = true;
             textBox1.Enabled = true;
-            button2.Text = "Send";
+            //button2.Text = "Send";
+            buttonTextyColorChange(button2);
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
@@ -623,6 +632,20 @@ namespace Data2Serial2
                 {
                     addToListSecure(read);
                 }
+            }
+        }
+
+        private void buttonTextyColorChange(Button button)
+        {
+            if (button.Text == "Send")
+            {
+                button.Text = "Cancel";
+                button.BackColor = cancelButtonColor;
+            }
+            else
+            {
+                button.Text = "Send";
+                button.BackColor = sendButtonColor;
             }
         }
 
