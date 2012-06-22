@@ -51,6 +51,7 @@
             this.CRCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.manualSendCommandBox = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.openPortButton = new System.Windows.Forms.Button();
@@ -76,7 +77,6 @@
             this.manualSendThread = new System.ComponentModel.BackgroundWorker();
             this.fileDumpThread = new System.ComponentModel.BackgroundWorker();
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
-            this.button5 = new System.Windows.Forms.Button();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -345,6 +345,16 @@
             settingsTab.TabIndex = 2;
             settingsTab.Text = "Settings";
             settingsTab.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(267, 3);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // comPortTab
             // 
@@ -660,16 +670,6 @@
             this.receiveThread.WorkerSupportsCancellation = true;
             this.receiveThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.receiveThread_DoWork);
             // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(267, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,6 +678,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Data2Serial2";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
