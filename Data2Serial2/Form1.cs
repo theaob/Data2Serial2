@@ -20,7 +20,7 @@ namespace Data2Serial2
 
         private LinkedList<String> linesRead = new LinkedList<string>();
         private LinkedList<byte[]> byteLines = new LinkedList<byte[]>();
-        private String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
@@ -659,6 +659,14 @@ namespace Data2Serial2
             button2.ForeColor = sendButtonTextColor;
             button3.BackColor = sendButtonColor;
             button3.ForeColor = sendButtonTextColor;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Updater updateDialog = new Updater();
+            updateDialog.ShowDialog();
+
+            
         }
     }
 }
