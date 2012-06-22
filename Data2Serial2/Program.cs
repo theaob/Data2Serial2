@@ -14,9 +14,9 @@ namespace Data2Serial2
         static void Main()
         {
             String path = Application.ExecutablePath;
-            path = path.Substring(path.LastIndexOf('\\')+1).ToLower();
+            path = path.Substring(path.LastIndexOf('\\')+1);
             //MessageBox.Show(path);
-            if (path == "data2serial2update.exe")
+            if (path == "Data2Serial2Update.exe")
             {
                 //This will delete the other file and rename itself
                 System.IO.File.Copy("Data2Serial2Update.exe", "Data2Serial2.exe", true);

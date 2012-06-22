@@ -36,12 +36,12 @@ namespace Data2Serial2
             }
             catch (System.Net.WebException)
             {
-                MessageBox.Show("There was an error caused by your internet connection. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There was an error caused by your internet connection. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
             catch (System.NotSupportedException)
             {
-                MessageBox.Show("There was an error caused by your internet connection. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There was an error caused by your internet connection. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
             
@@ -51,7 +51,7 @@ namespace Data2Serial2
         {
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message, "Error");
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error,MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
             updateString = e.Result;
@@ -63,7 +63,7 @@ namespace Data2Serial2
         {
             if (String.IsNullOrEmpty(updateString))
             {
-                MessageBox.Show("File was corrupt!", "Error");
+                MessageBox.Show("File was corrupt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace Data2Serial2
 
             if (String.IsNullOrEmpty(onlineVersion) || String.IsNullOrEmpty(changeLogLink) || String.IsNullOrEmpty(downloadLink))
             {
-                MessageBox.Show("File was corrupt!", "Error");
+                MessageBox.Show("File was corrupt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace Data2Serial2
             }
             else
             {
-                MessageBox.Show("You have the latest version installed");
+                MessageBox.Show("You have the latest version installed", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 this.Dispose();
             }
         }
@@ -103,10 +103,10 @@ namespace Data2Serial2
         {
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message, "Error");
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 return;
             }
-            textBox1.Text = e.Result;
+            textBox1.Text = e.Result.Replace("\n","\r\n");
 
             button1.Enabled = false;
         }
@@ -120,7 +120,7 @@ namespace Data2Serial2
         {
             if (System.IO.File.Exists("Data2Serial2Update.exe"))
             {
-                MessageBox.Show("In order to download the update again, you have to delete it manually. There will be an explorer window opening for this purpose.");
+                MessageBox.Show("In order to download the update again, you have to delete it manually. There will be an explorer window opening for this purpose.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 System.Diagnostics.Process.Start("explorer.exe", "/select," + "Data2Serial2Update.exe");
             }
             else
@@ -134,7 +134,7 @@ namespace Data2Serial2
 
         void wc3_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            MessageBox.Show("Download finished!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Download finished!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
             Application.Exit();
             System.Diagnostics.Process.Start("Data2Serial2Update.exe");
             //throw new NotImplementedException();

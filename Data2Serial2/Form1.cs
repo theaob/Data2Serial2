@@ -670,11 +670,11 @@ namespace Data2Serial2
             }
             catch (ObjectDisposedException)
             {
-                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
             }
             catch (InvalidOperationException)
             {
-                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You have the latest version installed!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
             }
             
             
