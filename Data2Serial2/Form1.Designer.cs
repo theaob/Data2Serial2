@@ -34,6 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -42,6 +43,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.SpaceStripCheckBox = new System.Windows.Forms.CheckBox();
             this.manualSendRepeatBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -71,8 +73,6 @@
             this.manualSendThread = new System.ComponentModel.BackgroundWorker();
             this.fileDumpThread = new System.ComponentModel.BackgroundWorker();
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -142,6 +142,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dump File to Port";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Location = new System.Drawing.Point(113, 63);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(52, 20);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.Text = "Delay";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // progressBar1
             // 
@@ -230,6 +240,15 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Send Manually";
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar2.Location = new System.Drawing.Point(64, 56);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(100, 23);
+            this.progressBar2.TabIndex = 6;
             // 
             // SpaceStripCheckBox
             // 
@@ -556,7 +575,6 @@
             this.listBox1.IntegralHeight = false;
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.listBox1.Size = new System.Drawing.Size(353, 248);
             this.listBox1.TabIndex = 0;
             this.listBox1.UseTabStops = false;
@@ -581,7 +599,9 @@
             // manualSendThread
             // 
             this.manualSendThread.WorkerReportsProgress = true;
+            this.manualSendThread.WorkerSupportsCancellation = true;
             this.manualSendThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.manualSendThread_DoWork);
+            this.manualSendThread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.manualSendThread_RunWorkerCompleted);
             this.manualSendThread.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.manualSendThread_ProgressChanged);
             // 
             // fileDumpThread
@@ -589,25 +609,8 @@
             this.fileDumpThread.WorkerReportsProgress = true;
             this.fileDumpThread.WorkerSupportsCancellation = true;
             this.fileDumpThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileDumpThread_DoWork);
-            // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(113, 63);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(52, 20);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "Delay";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar2.Location = new System.Drawing.Point(64, 56);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(100, 23);
-            this.progressBar2.TabIndex = 6;
+            this.fileDumpThread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.fileDumpThread_RunWorkerCompleted);
+            this.fileDumpThread.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileDumpThread_ProgressChanged);
             // 
             // Form1
             // 

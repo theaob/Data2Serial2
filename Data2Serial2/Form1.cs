@@ -119,6 +119,7 @@ namespace Data2Serial2
             //Following is faster
             listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:ff",null) + " | " + text);
             //listBox1.SetSelected(listBox1.Items.Count - 1, true);
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
 
 
@@ -142,6 +143,11 @@ namespace Data2Serial2
             }
             else
             {
+                groupBox2.Enabled = false;
+                comboBox1.Enabled = false;
+                button1.Enabled = false;
+                groupBox8.Enabled = false;
+                textBox1.Enabled = false;
                 fileDumpThread.RunWorkerAsync();
             }
         }
@@ -179,6 +185,15 @@ namespace Data2Serial2
             {
                 progressBar2.Value = 0;
                 manualSendThread.RunWorkerAsync(sendThis);
+                groupBox1.Enabled = false;
+                groupBox3.Enabled = false;
+                SpaceStripCheckBox.Enabled = false;
+                manualSendCommandBox.Enabled = false;
+                manualSendRepeatBox.Enabled = false;
+            }
+            else
+            {
+                manualSendThread.CancelAsync();
             }
         }
 
@@ -416,6 +431,11 @@ namespace Data2Serial2
             int progress = 0;
             for (int i = 0; i < manualRepeat; i++)
             {
+                if (manualSendThread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 addToListSecure(e.Argument.ToString());
                 dropStringOnLine(e.Argument.ToString());
                 manualSendThread.ReportProgress(progress++);
@@ -464,6 +484,24 @@ namespace Data2Serial2
         {
             progressBar2.Value = e.ProgressPercentage;
             progressBar2.PerformStep();
+        }
+
+        private void manualSendThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            groupBox1.Enabled = true;
+            groupBox3.Enabled = true;
+            SpaceStripCheckBox.Enabled = true;
+            manualSendCommandBox.Enabled = true;
+            manualSendRepeatBox.Enabled = true;
+        }
+
+        private void fileDumpThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            groupBox2.Enabled = true;
+            comboBox1.Enabled = true;
+            button1.Enabled = true;
+            groupBox8.Enabled = true;
+            textBox1.Enabled = true;
         }
 
 
