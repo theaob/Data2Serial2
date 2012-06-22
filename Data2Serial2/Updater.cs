@@ -12,7 +12,7 @@ namespace Data2Serial2
     public partial class Updater : Form
     {
         private String onlineVersion;
-        private String changeLog;
+        private String changeLogLink;
         private String downloadLink;
 
         private System.Net.WebClient wc = new System.Net.WebClient();
@@ -26,7 +26,12 @@ namespace Data2Serial2
         {
             try
             {
-                if (checkForUpdates(Form1.version))
+                getUpdateInfo();
+
+                label1.Text = label1.Text.Replace("{{yourversion}}", Form1.version);
+                label1.Text = label1.Text.Replace("{{newversion}}", onlineVersion);
+
+                if (onlineVersion != Form1.version)
                 {
                     //MessageBox.Show("A new update is available!\r\nYour Version is: " + Form1.version);
                     textBox1.Text = getChangeLog();
@@ -44,38 +49,19 @@ namespace Data2Serial2
             }
         }
 
-        private bool checkForUpdates(String yourVersion)
+        private void getUpdateInfo()
         {
-            var lines = getDataLines();
+            String update = wc.DownloadString("http://theaob.github.com/Data2Serial2/update");
+            String[] lines = update.Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (lines[0] != yourVersion)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-        private string getUpdateInfo()
-        {
-            System.Net.WebClient wcS = new System.Net.WebClient();
-
-            return wcS.DownloadString("http://theaob.github.com/Data2Serial2/update");
-        }
-
-        private String[] getDataLines()
-        {
-            String data = getUpdateInfo();
-
-            return data.Split(new String[]{ "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            onlineVersion = lines[0];
+            changeLogLink = lines[1];
+            downloadLink = lines[2];
         }
 
         private String getChangeLog()
         {
-            return wc.DownloadString(getDataLines()[1]);
+            return wc.DownloadString(changeLogLink);
         }
     }
 }
