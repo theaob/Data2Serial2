@@ -103,5 +103,23 @@ namespace Data2Serial2
         {
             Updater_Load(sender, e);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            System.Net.WebClient wc3 = new System.Net.WebClient();
+            wc3.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc3_DownloadProgressChanged);
+            wc3.DownloadFileCompleted += new AsyncCompletedEventHandler(wc3_DownloadFileCompleted);
+            wc3.DownloadFileAsync(new Uri(downloadLink), "Data2Serial2Update.zip");
+        }
+
+        void wc3_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void wc3_DownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+        }
     }
 }
