@@ -24,8 +24,10 @@ namespace Data2Serial2
 
         private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
-        private Color cancelButtonColor = new Color();
-        private Color sendButtonColor = new Color();
+        private Color cancelButtonColor = Color.Red; //new Color();
+        private Color sendButtonColor = Color.Green;//new Color();
+        private Color sendButtonTextColor = Color.White;
+        private Color cancelButtonTextColor = Color.White;
 
 
         //Used Variables
@@ -36,7 +38,7 @@ namespace Data2Serial2
             InitializeComponent();
             changeTitle(version);
             addToList("Application ("+version+") opened");
-
+            colorizeButtons();
 
         }
 
@@ -641,14 +643,22 @@ namespace Data2Serial2
             {
                 button.Text = "Cancel";
                 button.BackColor = cancelButtonColor;
+                button.ForeColor = cancelButtonTextColor;
             }
             else
             {
                 button.Text = "Send";
                 button.BackColor = sendButtonColor;
+                button.ForeColor = sendButtonTextColor;
             }
         }
 
-
+        private void colorizeButtons()
+        {
+            button2.BackColor = sendButtonColor;
+            button2.ForeColor = sendButtonTextColor;
+            button3.BackColor = sendButtonColor;
+            button3.ForeColor = sendButtonTextColor;
+        }
     }
 }
