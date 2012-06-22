@@ -13,6 +13,15 @@ namespace Data2Serial2
         [STAThread]
         static void Main()
         {
+            String path = Application.ExecutablePath;
+            if (path.Substring(path.IndexOf('\\')) == "Data2Serial2Update.exe")
+            {
+                MessageBox.Show("Update file");
+            }
+            else
+            {
+                MessageBox.Show("Old file");
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

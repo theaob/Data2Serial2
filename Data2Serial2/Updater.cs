@@ -106,15 +106,25 @@ namespace Data2Serial2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            System.Net.WebClient wc3 = new System.Net.WebClient();
-            wc3.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc3_DownloadProgressChanged);
-            wc3.DownloadFileCompleted += new AsyncCompletedEventHandler(wc3_DownloadFileCompleted);
-            wc3.DownloadFileAsync(new Uri(downloadLink), "Data2Serial2Update.exe");
+            if (System.IO.File.Exists("Data2Serial2Update.exe"))
+            {
+                MessageBox.Show("In order to download the update again, you have to delete it manually. There will be an explorer window opening for this purpose.");
+                System.Diagnostics.Process.Start("explorer.exe", "/select," + "Data2Serial2Update.exe");
+            }
+            else
+            {
+                System.Net.WebClient wc3 = new System.Net.WebClient();
+                wc3.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc3_DownloadProgressChanged);
+                wc3.DownloadFileCompleted += new AsyncCompletedEventHandler(wc3_DownloadFileCompleted);
+                wc3.DownloadFileAsync(new Uri(downloadLink), "Data2Serial2Update.exe");
+            }
         }
 
         void wc3_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             MessageBox.Show("Download finished!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Application.Exit();
+            System.Diagnostics.Process.Start("Data2Serial2Update.exe");
             //throw new NotImplementedException();
         }
 
