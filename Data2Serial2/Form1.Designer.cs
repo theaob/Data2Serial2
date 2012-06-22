@@ -37,8 +37,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.sendAsByteRadioButton = new System.Windows.Forms.RadioButton();
+            this.sendAsStringRadioButton = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -152,6 +152,8 @@
             this.textBox1.TabIndex = 7;
             this.textBox1.Text = "Delay";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             // 
             // progressBar1
             // 
@@ -164,8 +166,8 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.radioButton2);
-            this.groupBox8.Controls.Add(this.radioButton1);
+            this.groupBox8.Controls.Add(this.sendAsByteRadioButton);
+            this.groupBox8.Controls.Add(this.sendAsStringRadioButton);
             this.groupBox8.Location = new System.Drawing.Point(6, 48);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(101, 40);
@@ -173,27 +175,27 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Send As";
             // 
-            // radioButton2
+            // sendAsByteRadioButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(55, 18);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(46, 17);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Byte";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.sendAsByteRadioButton.AutoSize = true;
+            this.sendAsByteRadioButton.Location = new System.Drawing.Point(55, 18);
+            this.sendAsByteRadioButton.Name = "sendAsByteRadioButton";
+            this.sendAsByteRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.sendAsByteRadioButton.TabIndex = 2;
+            this.sendAsByteRadioButton.TabStop = true;
+            this.sendAsByteRadioButton.Text = "Byte";
+            this.sendAsByteRadioButton.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // sendAsStringRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 18);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(52, 17);
-            this.radioButton1.TabIndex = 4;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "String";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.sendAsStringRadioButton.AutoSize = true;
+            this.sendAsStringRadioButton.Location = new System.Drawing.Point(6, 18);
+            this.sendAsStringRadioButton.Name = "sendAsStringRadioButton";
+            this.sendAsStringRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.sendAsStringRadioButton.TabIndex = 4;
+            this.sendAsStringRadioButton.TabStop = true;
+            this.sendAsStringRadioButton.Text = "String";
+            this.sendAsStringRadioButton.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -691,8 +693,8 @@
         private System.ComponentModel.BackgroundWorker fileDumpThread;
         private System.ComponentModel.BackgroundWorker receiveThread;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton sendAsByteRadioButton;
+        private System.Windows.Forms.RadioButton sendAsStringRadioButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ProgressBar progressBar2;

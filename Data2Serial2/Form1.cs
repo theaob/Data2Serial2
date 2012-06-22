@@ -22,6 +22,8 @@ namespace Data2Serial2
         private LinkedList<byte[]> byteLines = new LinkedList<byte[]>();
         private String version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
+        private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+
 
         //Used Variables
 
@@ -140,6 +142,7 @@ namespace Data2Serial2
             if (fileDumpThread.IsBusy)
             {
                 fileDumpThread.CancelAsync();
+                stopwatch.Stop();
             }
             else
             {
@@ -148,7 +151,15 @@ namespace Data2Serial2
                 button1.Enabled = false;
                 groupBox8.Enabled = false;
                 textBox1.Enabled = false;
-                fileDumpThread.RunWorkerAsync();
+                int delay = 0;
+                if (IsItAPositiveNumber(textBox1.Text, out delay))
+                {
+                    fileDumpThread.RunWorkerAsync(delay);
+                }
+                else
+                {
+                    fileDumpThread.RunWorkerAsync();
+                }
             }
         }
 
@@ -445,16 +456,69 @@ namespace Data2Serial2
         private void fileDumpThread_DoWork(object sender, DoWorkEventArgs e)
         {
             int progress = 0;
-            foreach (String sendThis in linesRead)
+            int delay = 0;
+            if (e.Argument != null)
             {
-                if (fileDumpThread.CancellationPending == true)
+                delay = (int)e.Argument;
+            }
+            if (sendAsStringRadioButton.Checked == true)
+            {
+                stopwatch.Reset();
+                stopwatch.Start();
+                foreach (String sendThis in linesRead)
                 {
-                    e.Cancel = true;
-                    return;
+                    if (fileDumpThread.CancellationPending == true)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    while (true)
+                    {
+                        if (fileDumpThread.CancellationPending == true)
+                        {
+                            e.Cancel = true;
+                            break;
+                        }
+                        if (stopwatch.ElapsedMilliseconds == delay)
+                        {
+                            port.Write(sendThis);
+                            addToListSecure("Sent : " + sendThis);
+                            fileDumpThread.ReportProgress(progress++);
+                            stopwatch.Reset();
+                            stopwatch.Start();
+                            break;
+                        }
+                    }
                 }
-                port.Write(sendThis);
-                addToListSecure("Sent : " + sendThis);
-                fileDumpThread.ReportProgress(progress++);
+            }
+            else if (sendAsByteRadioButton.Checked == true)
+            {
+                stopwatch.Start();
+                foreach (byte[] sendThis in byteLines)
+                {
+                    while (true)
+                    {
+                        if (fileDumpThread.CancellationPending == true)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                        if (stopwatch.ElapsedMilliseconds == delay)
+                        {
+                            //port.Write(sendThis);
+                            port.Write(sendThis, 0, sendThis.Length);
+                            addToListSecure("Sent : " + ++progress);
+                            fileDumpThread.ReportProgress(progress);
+                            stopwatch.Reset();
+                            stopwatch.Start();
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                addToListSecure("Select file send mode!");
             }
         }
 
@@ -502,6 +566,22 @@ namespace Data2Serial2
             button1.Enabled = true;
             groupBox8.Enabled = true;
             textBox1.Enabled = true;
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "Delay")
+            {
+                textBox1.Text = "";
+            }
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            if (textBox1.Text == null || textBox1.Text.Trim() == "")
+            {
+                textBox1.Text = "Delay";
+            }
         }
 
 
