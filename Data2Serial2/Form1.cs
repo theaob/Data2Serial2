@@ -677,18 +677,23 @@ namespace Data2Serial2
                 button4.Text = "Start Listening";
                 button4.BackColor = Settings1.Default.sendButtonColor;
                 button4.ForeColor = Settings1.Default.sendButtonTextColor;
+                groupBox10.Enabled = true;
+
             }
             else
             {
+                port.ReadTimeout = 100;
                 receiveThread.RunWorkerAsync();
                 button4.Text = "Stop Listening";
                 button4.BackColor = Settings1.Default.cancelButtonColor;
                 button4.ForeColor = Settings1.Default.cancelButtonTextColor;
+                groupBox10.Enabled = false;
             }
         }
 
         private void receiveThread_DoWork(object sender, DoWorkEventArgs e)
         {
+            System.Globalization.CultureInfo cix = new System.Globalization.CultureInfo("en-US");
             while (true)
             {
                 if (receiveThread.CancellationPending == true)
@@ -696,10 +701,31 @@ namespace Data2Serial2
                     e.Cancel = true;
                     return;
                 }
-                String read = port.ReadLine();
-                if (!String.IsNullOrEmpty(read))
+                try
                 {
-                    addToListSecure(read);
+                    if(radioButton1.Checked)
+                    {
+                        String read = port.ReadLine();
+
+                        addToListSecure(read);
+                    }
+                    else if (radioButton2.Checked)
+                    {
+                        char read = (char)port.ReadChar();
+
+                        addToListSecure(read.ToString());
+                    }
+                    else if (radioButton3.Checked)
+                    {
+                        byte read = (byte) port.ReadByte();
+
+                        addToListSecure(read.ToString(cix));
+                    }
+                    //port.
+                    
+                }
+                catch (TimeoutException)
+                {
                 }
             }
         }
