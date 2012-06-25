@@ -23,5 +23,27 @@
     <Setting Name="cancelButtonTextColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">White</Value>
     </Setting>
+    <Setting Name="baudRates" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;115200&lt;/string&gt;
+  &lt;string&gt;57600&lt;/string&gt;
+  &lt;string&gt;38400&lt;/string&gt;
+  &lt;string&gt;19200&lt;/string&gt;
+  &lt;string&gt;9600&lt;/string&gt;
+  &lt;string&gt;1200&lt;/string&gt;
+  &lt;string&gt;300&lt;/string&gt;
+  &lt;string&gt;921600&lt;/string&gt;
+  &lt;string&gt;460800&lt;/string&gt;
+  &lt;string&gt;230400&lt;/string&gt;
+  &lt;string&gt;4800&lt;/string&gt;
+  &lt;string&gt;2400&lt;/string&gt;
+  &lt;string&gt;150&lt;/string&gt;
+  &lt;string&gt;110&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="lastBaudRateIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

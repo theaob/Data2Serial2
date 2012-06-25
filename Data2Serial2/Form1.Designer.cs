@@ -351,6 +351,7 @@
             // 
             // button5
             // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button5.Location = new System.Drawing.Point(229, 3);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(113, 23);
@@ -439,21 +440,6 @@
             // baudRateComboBox
             // 
             this.baudRateComboBox.FormattingEnabled = true;
-            this.baudRateComboBox.Items.AddRange(new object[] {
-            "115200",
-            "57600",
-            "38400",
-            "19200",
-            "9600",
-            "1200",
-            "300",
-            "921600",
-            "460800",
-            "230400",
-            "4800",
-            "2400",
-            "150",
-            "110"});
             this.baudRateComboBox.Location = new System.Drawing.Point(75, 13);
             this.baudRateComboBox.Name = "baudRateComboBox";
             this.baudRateComboBox.Size = new System.Drawing.Size(121, 21);

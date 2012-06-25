@@ -302,10 +302,13 @@ namespace Data2Serial2
             {
 
                 int baudRate = 9600;
-                if(IsItAPositiveNumber(baudRateComboBox.SelectedItem.ToString(),out baudRate))
+                //baudRateComboBox.SelectedItem.ToString()
+                if (IsItAPositiveNumber(baudRateComboBox.Text, out baudRate))
                 {
                     port.BaudRate = baudRate;
                 }
+
+
 
                 switch (parityComboBox.SelectedItem.ToString())
                 {
@@ -373,8 +376,29 @@ namespace Data2Serial2
                 }
 
                 port.PortName = portComboBox.SelectedItem.ToString();
-            
-                port.Open();
+
+                try
+                {
+                    port.Open();
+                }
+                catch (IOException)
+                {
+                    showError("Please select valid port settings");
+                    return;
+                }
+
+                if (!Settings1.Default.baudRates.Contains(port.BaudRate.ToString()))
+                {
+                    Settings1.Default.baudRates.Add(port.BaudRate.ToString());
+                    Settings1.Default.lastBaudRateIndex = baudRateComboBox.Items.Count;
+                    Settings1.Default.Save();
+                }
+                else
+                {
+                    Settings1.Default.lastBaudRateIndex = baudRateComboBox.SelectedIndex;
+                    Settings1.Default.Save();
+                }
+
                 openPortButton.Text = "Close Port";
 
                 addToList(port.PortName + " is open!");
@@ -403,11 +427,17 @@ namespace Data2Serial2
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            foreach (String rate in Settings1.Default.baudRates)
+            {
+                baudRateComboBox.Items.Add(rate);
+            }
+
             loadPortsIntoCombobox();
-            baudRateComboBox.SelectedIndex = 0;
+            baudRateComboBox.SelectedIndex = Settings1.Default.lastBaudRateIndex;
             stopBitsComboBox.SelectedIndex = 1;
             dataBitsComboBox.SelectedIndex = 0;
             parityComboBox.SelectedIndex = 0;
+
             
         }
 
@@ -720,6 +750,5 @@ namespace Data2Serial2
                 return false;
             }
         }
-
     }
 }
