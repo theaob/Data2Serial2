@@ -149,24 +149,13 @@ namespace Data2Serial2 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringDictionary files {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool howToScroll {
             get {
-                return ((global::System.Collections.Specialized.StringDictionary)(this["files"]));
+                return ((bool)(this["howToScroll"]));
             }
             set {
-                this["files"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int lastFileBoxIndex {
-            get {
-                return ((int)(this["lastFileBoxIndex"]));
-            }
-            set {
-                this["lastFileBoxIndex"] = value;
+                this["howToScroll"] = value;
             }
         }
     }

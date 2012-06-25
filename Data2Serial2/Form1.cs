@@ -61,7 +61,6 @@ namespace Data2Serial2
             }
 
             String shortName = filename.Substring(filename.LastIndexOf('\\') + 1);
-            addToFileList(shortName, filename);
             changeTitle(shortName);
             addToList("Selected " + shortName);
 
@@ -127,18 +126,13 @@ namespace Data2Serial2
             //Following is faster
             listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:ff",null) + " | " + text);
             //listBox1.SetSelected(listBox1.Items.Count - 1, true);
-            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            if (Settings1.Default.howToScroll)
+            {
+                listBox1.SetSelected(listBox1.Items.Count - 1, true);
+            }
+            //listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
 
-
-        private void addToFileList(String shortName, String text)
-        {
-            comboBox1.Items.Insert(comboBox1.Items.Count, shortName);
-            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
-
-            Settings1.Default.files.Add(shortName, text);
-            Settings1.Default.Save();
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -158,7 +152,6 @@ namespace Data2Serial2
             else
             {
                 groupBox2.Enabled = false;
-                comboBox1.Enabled = false;
                 button1.Enabled = false;
                 groupBox8.Enabled = false;
                 textBox1.Enabled = false;
@@ -444,20 +437,7 @@ namespace Data2Serial2
             dataBitsComboBox.SelectedIndex = 0;
             parityComboBox.SelectedIndex = 0;
 
-            if (Settings1.Default.files != null)
-            {
-                foreach (String file in Settings1.Default.files)
-                {
-                    comboBox1.Items.Add(file);
-                }
-            }
-            else
-            {
-                Settings1.Default.files = new System.Collections.Specialized.StringDictionary();
-                Settings1.Default.Save();
-            }
-            //comboBox1.SelectedIndex = 
-            
+            checkBox1.Checked = Settings1.Default.howToScroll;
         }
 
         private void loadPortsIntoCombobox()
@@ -628,17 +608,18 @@ namespace Data2Serial2
             manualSendRepeatBox.Enabled = true;
             //button3.Text = "Send";
             buttonTextyColorChange(button3);
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
 
         private void fileDumpThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             groupBox2.Enabled = true;
-            comboBox1.Enabled = true;
             button1.Enabled = true;
             groupBox8.Enabled = true;
             textBox1.Enabled = true;
             //button2.Text = "Send";
             buttonTextyColorChange(button2);
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
@@ -817,6 +798,16 @@ namespace Data2Serial2
                     return;
                 }
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                showError("BEWARE: Instantaneous scrolling slows down sending data");
+            }
+            Settings1.Default.howToScroll = checkBox1.Checked;
+            Settings1.Default.Save();
         }
     }
 }
