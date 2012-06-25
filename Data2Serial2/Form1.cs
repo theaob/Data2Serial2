@@ -665,13 +665,25 @@ namespace Data2Serial2
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
+
             if (receiveThread.IsBusy)
             {
                 receiveThread.CancelAsync();
+                button4.Text = "Start Listening";
+                button4.BackColor = Settings1.Default.sendButtonColor;
+                button4.ForeColor = Settings1.Default.sendButtonTextColor;
             }
             else
             {
                 receiveThread.RunWorkerAsync();
+                button4.Text = "Stop Listening";
+                button4.BackColor = Settings1.Default.cancelButtonColor;
+                button4.ForeColor = Settings1.Default.cancelButtonTextColor;
             }
         }
 
@@ -714,6 +726,8 @@ namespace Data2Serial2
             button2.ForeColor = sendButtonTextColor;
             button3.BackColor = sendButtonColor;
             button3.ForeColor = sendButtonTextColor;
+            button4.BackColor = sendButtonColor;
+            button4.ForeColor = sendButtonTextColor;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -746,6 +760,7 @@ namespace Data2Serial2
             sendButtonTextColor = Settings1.Default.sendButtonTextColor;
             cancelButtonColor = Settings1.Default.cancelButtonColor;
             cancelButtonTextColor = Settings1.Default.cancelButtonTextColor;
+
 
             checkBox1.Checked = Settings1.Default.howToScroll;
             checkBox2.Checked = Settings1.Default.autoUpdate;
