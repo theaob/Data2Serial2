@@ -50,6 +50,9 @@
             this.CRCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.manualSendCommandBox = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -75,6 +78,14 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button8 = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -87,9 +98,7 @@
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
             this.autoUpdateThread = new System.ComponentModel.BackgroundWorker();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -102,6 +111,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             settingsTab.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             comPortTab.SuspendLayout();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
@@ -116,9 +127,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.groupBox10.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // sendTab
@@ -152,6 +162,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox5);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Controls.Add(this.groupBox8);
@@ -168,7 +179,7 @@
             // textBox1
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(113, 63);
+            this.textBox1.Location = new System.Drawing.Point(113, 68);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(52, 20);
             this.textBox1.TabIndex = 7;
@@ -357,6 +368,45 @@
             settingsTab.TabIndex = 2;
             settingsTab.Text = "Settings";
             settingsTab.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox11.Controls.Add(this.trackBar1);
+            this.groupBox11.Location = new System.Drawing.Point(229, 26);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(113, 69);
+            this.groupBox11.TabIndex = 7;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Opacity";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.BackColor = System.Drawing.Color.White;
+            this.trackBar1.LargeChange = 25;
+            this.trackBar1.Location = new System.Drawing.Point(3, 17);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Minimum = 5;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.SmallChange = 10;
+            this.trackBar1.TabIndex = 0;
+            this.trackBar1.TickFrequency = 10;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar1.Value = 100;
+            this.trackBar1.Leave += new System.EventHandler(this.trackBar1_Leave);
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(3, 32);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(96, 17);
+            this.checkBox3.TabIndex = 6;
+            this.checkBox3.Text = "Always on Top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -667,6 +717,8 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.checkBox4);
+            this.groupBox9.Controls.Add(this.groupBox12);
             this.groupBox9.Controls.Add(this.button8);
             this.groupBox9.Controls.Add(this.groupBox10);
             this.groupBox9.Controls.Add(this.button4);
@@ -678,6 +730,89 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Options";
             // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(95, 20);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(163, 17);
+            this.checkBox4.TabIndex = 5;
+            this.checkBox4.Text = "Receive from a seperate port";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox12.Controls.Add(this.button10);
+            this.groupBox12.Controls.Add(this.button9);
+            this.groupBox12.Controls.Add(this.comboBox2);
+            this.groupBox12.Controls.Add(this.label4);
+            this.groupBox12.Controls.Add(this.label3);
+            this.groupBox12.Controls.Add(this.comboBox1);
+            this.groupBox12.Enabled = false;
+            this.groupBox12.Location = new System.Drawing.Point(95, 43);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(247, 59);
+            this.groupBox12.TabIndex = 4;
+            this.groupBox12.TabStop = false;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(195, 28);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(46, 23);
+            this.button10.TabIndex = 5;
+            this.button10.Text = "Open";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(134, 28);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(58, 23);
+            this.button9.TabIndex = 4;
+            this.button9.Text = "Refresh";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(70, 30);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(58, 21);
+            this.comboBox2.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(67, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Baud Rate:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Port:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(6, 30);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(57, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
             // button8
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -687,6 +822,7 @@
             this.button8.TabIndex = 2;
             this.button8.Text = "Save Log";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // groupBox10
             // 
@@ -773,44 +909,15 @@
             // 
             this.autoUpdateThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.autoUpdateThread_DoWork);
             // 
-            // checkBox3
+            // checkBox5
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(3, 32);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(96, 17);
-            this.checkBox3.TabIndex = 6;
-            this.checkBox3.Text = "Always on Top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox11.Controls.Add(this.trackBar1);
-            this.groupBox11.Location = new System.Drawing.Point(229, 26);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(113, 69);
-            this.groupBox11.TabIndex = 7;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Opacity";
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.BackColor = System.Drawing.Color.White;
-            this.trackBar1.LargeChange = 25;
-            this.trackBar1.Location = new System.Drawing.Point(3, 17);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Minimum = 5;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
-            this.trackBar1.SmallChange = 10;
-            this.trackBar1.TabIndex = 0;
-            this.trackBar1.TickFrequency = 10;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBar1.Value = 100;
-            this.trackBar1.Leave += new System.EventHandler(this.trackBar1_Leave);
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(113, 48);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(47, 17);
+            this.checkBox5.TabIndex = 8;
+            this.checkBox5.Text = "EOL";
+            this.checkBox5.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -839,6 +946,9 @@
             this.groupBox3.PerformLayout();
             settingsTab.ResumeLayout(false);
             settingsTab.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             comPortTab.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -855,11 +965,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -924,6 +1034,15 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.CheckBox checkBox5;
 
 
     }

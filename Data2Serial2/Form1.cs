@@ -17,6 +17,7 @@ namespace Data2Serial2
     {
 
         private SerialPort port = new SerialPort();
+        private SerialPort receivePort = new SerialPort();
 
         private LinkedList<String> linesRead = new LinkedList<string>();
         private LinkedList<byte[]> byteLines = new LinkedList<byte[]>();
@@ -396,6 +397,11 @@ namespace Data2Serial2
                     showError("Please select valid port settings");
                     return;
                 }
+                catch (UnauthorizedAccessException)
+                {
+                    showError("This port is in use!");
+                    return;
+                }
 
                 Settings1.Default.dataBitIndex = dataBitsComboBox.SelectedIndex;
                 Settings1.Default.stopBitIndex = stopBitsComboBox.SelectedIndex;
@@ -450,7 +456,7 @@ namespace Data2Serial2
                 baudRateComboBox.Items.Add(rate);
             }
 
-            loadPortsIntoCombobox();
+            loadPortsIntoCombobox(portComboBox);
             baudRateComboBox.SelectedIndex = Settings1.Default.lastBaudRateIndex;
             stopBitsComboBox.SelectedIndex = Settings1.Default.stopBitIndex;
             dataBitsComboBox.SelectedIndex = Settings1.Default.dataBitIndex;
@@ -473,29 +479,31 @@ namespace Data2Serial2
             }
         }
 
-        private void loadPortsIntoCombobox()
+        private void loadPortsIntoCombobox(ComboBox box)
         {
-            portComboBox.Items.Clear();
+            SerialPort tport = new SerialPort();
+
+            box.Items.Clear();
             String[] ports = SerialPort.GetPortNames();
             foreach (String portString in ports)
             {
                 try
                 {
-                    port.PortName = portString;
-                    port.Open();
-                    portComboBox.Items.Add(portString);
-                    port.Close();
+                    tport.PortName = portString;
+                    tport.Open();
+                    box.Items.Add(portString);
+                    tport.Close();
                 }
                 catch (UnauthorizedAccessException)
                 {
                 }
             }
-            portComboBox.SelectedIndex = 0;
+            box.SelectedIndex = 0;
         }
 
         private void scanPortButton_Click(object sender, EventArgs e)
         {
-            loadPortsIntoCombobox();
+            loadPortsIntoCombobox(portComboBox);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -557,7 +565,14 @@ namespace Data2Serial2
                         }
                         if (stopwatch.ElapsedMilliseconds == delay)
                         {
-                            port.Write(sendThis);
+                            if (checkBox5.Checked)
+                            {
+                                port.Write(sendThis + "\r\n");
+                            }
+                            else
+                            {
+                                port.Write(sendThis);
+                            }
                             addToListSecure("Sent : " + sendThis);
                             fileDumpThread.ReportProgress(progress++);
                             stopwatch.Reset();
@@ -686,6 +701,7 @@ namespace Data2Serial2
                 button4.BackColor = Settings1.Default.sendButtonColor;
                 button4.ForeColor = Settings1.Default.sendButtonTextColor;
                 groupBox10.Enabled = true;
+                button10.Enabled = true;
 
             }
             else
@@ -696,6 +712,7 @@ namespace Data2Serial2
                 button4.BackColor = Settings1.Default.cancelButtonColor;
                 button4.ForeColor = Settings1.Default.cancelButtonTextColor;
                 groupBox10.Enabled = false;
+                button10.Enabled = false;
             }
         }
 
@@ -711,26 +728,53 @@ namespace Data2Serial2
                 }
                 try
                 {
-                    if(radioButton1.Checked)
+                    if (checkBox4.Checked)
                     {
-                        String read = port.ReadLine();
+                        if (radioButton1.Checked)
+                        {
+                            String read = receivePort.ReadLine();
 
-                        addToListSecure(read);
+                            addToListSecure(read);
+                        }
+                        else if (radioButton2.Checked)
+                        {
+                            char read = (char)receivePort.ReadChar();
+
+                            addToListSecure(read.ToString());
+                        }
+                        else if (radioButton3.Checked)
+                        {
+                            byte read = (byte)receivePort.ReadByte();
+
+                            addToListSecure(read.ToString(cix));
+                        }
                     }
-                    else if (radioButton2.Checked)
+                    else
                     {
-                        char read = (char)port.ReadChar();
+                        if (radioButton1.Checked)
+                        {
+                            String read = port.ReadLine();
 
-                        addToListSecure(read.ToString());
-                    }
-                    else if (radioButton3.Checked)
-                    {
-                        byte read = (byte) port.ReadByte();
+                            addToListSecure(read);
+                        }
+                        else if (radioButton2.Checked)
+                        {
+                            char read = (char)port.ReadChar();
 
-                        addToListSecure(read.ToString(cix));
+                            addToListSecure(read.ToString());
+                        }
+                        else if (radioButton3.Checked)
+                        {
+                            byte read = (byte)port.ReadByte();
+
+                            addToListSecure(read.ToString(cix));
+                        }
                     }
                 }
                 catch (TimeoutException)
+                {
+                }
+                catch (IOException)
                 {
                 }
             }
@@ -976,6 +1020,73 @@ namespace Data2Serial2
         {
             Settings1.Default.opacity = this.Opacity;
             Settings1.Default.Save();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox12.Enabled = checkBox4.Checked;
+            loadPortsIntoCombobox(comboBox1);
+            foreach (String rate in Settings1.Default.baudRates)
+            {
+                comboBox2.Items.Add(rate);
+            }
+            comboBox2.SelectedIndex = 0;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            loadPortsIntoCombobox(comboBox1);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (receivePort.IsOpen)
+            {
+                receivePort.Close();
+
+                comboBox1.Enabled = true;
+                comboBox2.Enabled = true;
+                checkBox4.Enabled = true;
+                button9.Enabled = true;
+                label3.Enabled = true;
+                label4.Enabled = true;
+                button10.Text = "Open";
+                return;
+            }
+
+            int baudRate = 9600;
+            if (!IsItAPositiveNumber(comboBox2.Text,out baudRate))
+            {
+                showError("Please enter a valid baud rate!");
+                return;
+            }
+
+            receivePort.PortName = comboBox1.Text;
+
+            try
+            {
+                receivePort.Open();
+                receivePort.ReadTimeout = 200;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                showError("This port is in use");
+                return;
+            }
+            catch (IOException)
+            {
+                showError("Please enter valid port options");
+                return;
+            }
+
+            comboBox1.Enabled = false;
+            comboBox2.Enabled = false;
+            checkBox4.Enabled = false;
+            button9.Enabled = false;
+            label3.Enabled = false;
+            label4.Enabled = false;
+
+            button10.Text = "Close";
         }
     }
 }
