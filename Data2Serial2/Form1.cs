@@ -736,6 +736,7 @@ namespace Data2Serial2
             linkLabel1.BackColor = Settings1.Default.terminalBackcolor;
             listBox1.ForeColor = Settings1.Default.terminalForecolor;
             listBox1.BackColor = Settings1.Default.terminalBackcolor;
+            listBox1.Font = Settings1.Default.terminalFont;
             sendButtonColor = Settings1.Default.sendButtonColor;
             sendButtonTextColor = Settings1.Default.sendButtonTextColor;
             cancelButtonColor = Settings1.Default.cancelButtonColor;
@@ -812,6 +813,8 @@ namespace Data2Serial2
 
                     Settings1.Default.autoUpdate = false;
                     Settings1.Default.howToScroll = false;
+
+                    Settings1.Default.terminalFont = new Font(FontFamily.GenericMonospace, (float)8.0);
 
                     Settings1.Default.Save();
 

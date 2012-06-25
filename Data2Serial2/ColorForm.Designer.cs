@@ -49,6 +49,9 @@
             this.sendButtonBackColorBox = new System.Windows.Forms.PictureBox();
             this.cancelButtonBackcolorBox = new System.Windows.Forms.PictureBox();
             this.cancelButtonForecolorBox = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backColorButton)).BeginInit();
@@ -62,6 +65,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.terminalForeColorBox);
             this.groupBox1.Controls.Add(this.clearLinkColorBox);
@@ -265,6 +270,25 @@
             this.cancelButtonForecolorBox.TabStop = false;
             this.cancelButtonForecolorBox.Click += new System.EventHandler(this.cancelButtonForecolorBox_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Font:";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(96, 82);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(77, 23);
+            this.button5.TabIndex = 9;
+            this.button5.Text = "Select";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // ColorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,5 +342,8 @@
         private System.Windows.Forms.PictureBox cancelButtonForecolorBox;
         private System.Windows.Forms.PictureBox sendButtonBackColorBox;
         private System.Windows.Forms.PictureBox sendButtonForecolorBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.Button button5;
     }
 }

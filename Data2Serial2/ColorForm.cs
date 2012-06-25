@@ -11,6 +11,8 @@ namespace Data2Serial2
 {
     public partial class ColorForm : Form
     {
+        private Font thisFont = new Font(Settings1.Default.terminalFont.FontFamily, Settings1.Default.terminalFont.Size);
+
         public ColorForm()
         {
             InitializeComponent();
@@ -35,6 +37,8 @@ namespace Data2Serial2
 
             listBox1.BackColor = backColorButton.BackColor;
             listBox1.ForeColor = terminalForeColorBox.BackColor;
+            listBox1.Font = thisFont;
+
             linkLabel1.BackColor = backColorButton.BackColor;
             linkLabel1.LinkColor = clearLinkColorBox.BackColor;
 
@@ -120,6 +124,22 @@ namespace Data2Serial2
             colorDialog1.ShowDialog();
             cancelButtonBackcolorBox.BackColor = colorDialog1.Color;
             refreshColors();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            fontDialog1.Font = Settings1.Default.terminalFont;
+            fontDialog1.ShowDialog();
+            if (fontDialog1.Font == listBox1.Font)
+            {
+                return;
+            }
+            else
+            {
+                listBox1.Font = fontDialog1.Font;
+                Settings1.Default.terminalFont = fontDialog1.Font;
+                return;
+            }
         }
     }
 }
