@@ -750,5 +750,54 @@ namespace Data2Serial2
                 return false;
             }
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (IsTerminalBusy())
+            {
+                showError("You cannot reset settings while using terminal!");
+            }else{
+                DialogResult reply = MessageBox.Show("Are you sure?", "Reset Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
+                if (reply == DialogResult.Yes)
+                {
+                    Settings1.Default.baudRates.Clear();
+                    Settings1.Default.baudRates.Add("115200");
+                    Settings1.Default.baudRates.Add("57600");
+                    Settings1.Default.baudRates.Add("38400");
+                    Settings1.Default.baudRates.Add("19200");
+                    Settings1.Default.baudRates.Add("9600");
+                    Settings1.Default.baudRates.Add("1200");
+                    Settings1.Default.baudRates.Add("300");
+                    Settings1.Default.baudRates.Add("921600");
+                    Settings1.Default.baudRates.Add("460800");
+                    Settings1.Default.baudRates.Add("230400");
+                    Settings1.Default.baudRates.Add("4800");
+                    Settings1.Default.baudRates.Add("2400");
+                    Settings1.Default.baudRates.Add("150");
+                    Settings1.Default.baudRates.Add("110");
+
+                    Settings1.Default.lastBaudRateIndex = 0;
+
+                    Settings1.Default.cancelButtonColor = Color.Red;
+                    Settings1.Default.cancelButtonTextColor = Color.White;
+                    Settings1.Default.clearLinkForecolor = Color.White;
+                    Settings1.Default.sendButtonColor = Color.Green;
+                    Settings1.Default.sendButtonTextColor = Color.White;
+
+                    Settings1.Default.terminalBackcolor = Color.Black;
+                    Settings1.Default.terminalForecolor = Color.Lime;
+
+
+
+                    Settings1.Default.Save();
+
+                    refreshColors();
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
     }
 }

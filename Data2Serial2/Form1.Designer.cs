@@ -51,6 +51,7 @@
             this.CRCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.manualSendCommandBox = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -78,7 +79,7 @@
             this.fileDumpThread = new System.ComponentModel.BackgroundWorker();
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -340,6 +341,7 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(this.button7);
             settingsTab.Controls.Add(this.button6);
             settingsTab.Controls.Add(this.button5);
             settingsTab.Location = new System.Drawing.Point(4, 22);
@@ -348,6 +350,16 @@
             settingsTab.TabIndex = 2;
             settingsTab.Text = "Settings";
             settingsTab.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(3, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Colors";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
             // button5
             // 
@@ -659,15 +671,16 @@
             this.receiveThread.WorkerSupportsCancellation = true;
             this.receiveThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.receiveThread_DoWork);
             // 
-            // button6
+            // button7
             // 
-            this.button6.Location = new System.Drawing.Point(3, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "Colors";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Location = new System.Drawing.Point(229, 32);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(113, 23);
+            this.button7.TabIndex = 2;
+            this.button7.Text = "Reset Settings";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
@@ -763,6 +776,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
 
 
     }
