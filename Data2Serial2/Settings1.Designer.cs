@@ -230,5 +230,17 @@ namespace Data2Serial2 {
                 this["isOnTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double opacity {
+            get {
+                return ((double)(this["opacity"]));
+            }
+            set {
+                this["opacity"] = value;
+            }
+        }
     }
 }

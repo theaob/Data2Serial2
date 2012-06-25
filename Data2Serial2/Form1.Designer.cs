@@ -52,7 +52,6 @@
             this.manualSendCommandBox = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -89,6 +88,8 @@
             this.autoUpdateThread = new System.ComponentModel.BackgroundWorker();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -116,6 +117,8 @@
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // sendTab
@@ -341,10 +344,10 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(this.groupBox11);
             settingsTab.Controls.Add(this.checkBox3);
             settingsTab.Controls.Add(this.checkBox2);
             settingsTab.Controls.Add(this.checkBox1);
-            settingsTab.Controls.Add(this.label3);
             settingsTab.Controls.Add(this.button7);
             settingsTab.Controls.Add(this.button6);
             settingsTab.Controls.Add(this.button5);
@@ -357,9 +360,8 @@
             // 
             // checkBox2
             // 
-            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(242, 32);
+            this.checkBox2.Location = new System.Drawing.Point(3, 78);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(86, 17);
             this.checkBox2.TabIndex = 5;
@@ -370,22 +372,13 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(156, 7);
+            this.checkBox1.Location = new System.Drawing.Point(3, 55);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(58, 17);
+            this.checkBox1.Size = new System.Drawing.Size(87, 17);
             this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Instant";
+            this.checkBox1.Text = "Instant Scroll";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(84, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Scroll Mode:";
             // 
             // button7
             // 
@@ -687,6 +680,7 @@
             // 
             // button8
             // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button8.Location = new System.Drawing.Point(267, 16);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
@@ -790,6 +784,34 @@
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox11.Controls.Add(this.trackBar1);
+            this.groupBox11.Location = new System.Drawing.Point(229, 26);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(113, 69);
+            this.groupBox11.TabIndex = 7;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Opacity";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.BackColor = System.Drawing.Color.White;
+            this.trackBar1.LargeChange = 25;
+            this.trackBar1.Location = new System.Drawing.Point(3, 17);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Minimum = 5;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.SmallChange = 10;
+            this.trackBar1.TabIndex = 0;
+            this.trackBar1.TickFrequency = 10;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar1.Value = 100;
+            this.trackBar1.Leave += new System.EventHandler(this.trackBar1_Leave);
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -835,6 +857,9 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -888,7 +913,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.ComponentModel.BackgroundWorker autoUpdateThread;
         private System.Windows.Forms.GroupBox groupBox10;
@@ -898,6 +922,8 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.TrackBar trackBar1;
 
 
     }

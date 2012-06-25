@@ -460,6 +460,11 @@ namespace Data2Serial2
             checkBox2.Checked = Settings1.Default.autoUpdate;
             checkBox3.Checked = Settings1.Default.isOnTop;
 
+
+            this.Opacity = Settings1.Default.opacity;
+            trackBar1.Value = (int)(this.Opacity * 100);
+
+
             this.TopMost = checkBox3.Checked;
 
             if (Settings1.Default.autoUpdate && !autoUpdateThread.IsBusy)
@@ -960,6 +965,17 @@ namespace Data2Serial2
             Settings1.Default.isOnTop = checkBox3.Checked;
             Settings1.Default.Save();
             this.TopMost = checkBox3.Checked;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            this.Opacity = (float)(trackBar1.Value / 100.0);
+        }
+
+        private void trackBar1_Leave(object sender, EventArgs e)
+        {
+            Settings1.Default.opacity = this.Opacity;
+            Settings1.Default.Save();
         }
     }
 }
