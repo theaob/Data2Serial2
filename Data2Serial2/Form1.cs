@@ -835,7 +835,7 @@ namespace Data2Serial2
             try
             {
                 updateFile = client.DownloadString("http://theaob.github.com/Data2Serial2/update");
-                updateFile = updateFile.Substring(0, updateFile.IndexOf("\n"));
+                updateFile = updateFile.Substring(0, updateFile.IndexOf("\n", StringComparison.CurrentCulture));
 
                 System.Version onlineVersion = new Version(updateFile);
                 System.Version thisVersion = new Version(version);
