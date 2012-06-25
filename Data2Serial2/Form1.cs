@@ -61,7 +61,7 @@ namespace Data2Serial2
             }
 
             String shortName = filename.Substring(filename.LastIndexOf('\\') + 1);
-            addToFileList(shortName);
+            addToFileList(shortName, filename);
             changeTitle(shortName);
             addToList("Selected " + shortName);
 
@@ -131,10 +131,13 @@ namespace Data2Serial2
         }
 
 
-        private void addToFileList(String text)
+        private void addToFileList(String shortName, String text)
         {
-            comboBox1.Items.Insert(comboBox1.Items.Count, text);
+            comboBox1.Items.Insert(comboBox1.Items.Count, shortName);
             comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+
+            Settings1.Default.files.Add(shortName, text);
+            Settings1.Default.Save();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -387,9 +390,12 @@ namespace Data2Serial2
                     return;
                 }
 
-                if (!Settings1.Default.baudRates.Contains(port.BaudRate.ToString()))
+                System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
+                String baudRateToCheck = port.BaudRate.ToString(ci);
+
+                if (!Settings1.Default.baudRates.Contains(baudRateToCheck))
                 {
-                    Settings1.Default.baudRates.Add(port.BaudRate.ToString());
+                    Settings1.Default.baudRates.Add(baudRateToCheck);
                     Settings1.Default.lastBaudRateIndex = baudRateComboBox.Items.Count;
                     Settings1.Default.Save();
                 }
@@ -438,6 +444,19 @@ namespace Data2Serial2
             dataBitsComboBox.SelectedIndex = 0;
             parityComboBox.SelectedIndex = 0;
 
+            if (Settings1.Default.files != null)
+            {
+                foreach (String file in Settings1.Default.files)
+                {
+                    comboBox1.Items.Add(file);
+                }
+            }
+            else
+            {
+                Settings1.Default.files = new System.Collections.Specialized.StringDictionary();
+                Settings1.Default.Save();
+            }
+            //comboBox1.SelectedIndex = 
             
         }
 

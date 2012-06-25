@@ -78,7 +78,6 @@
             this.manualSendThread = new System.ComponentModel.BackgroundWorker();
             this.fileDumpThread = new System.ComponentModel.BackgroundWorker();
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.button7 = new System.Windows.Forms.Button();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
@@ -774,7 +773,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
 

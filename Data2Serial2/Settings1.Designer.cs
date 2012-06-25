@@ -146,5 +146,28 @@ namespace Data2Serial2 {
                 this["lastBaudRateIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringDictionary files {
+            get {
+                return ((global::System.Collections.Specialized.StringDictionary)(this["files"]));
+            }
+            set {
+                this["files"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lastFileBoxIndex {
+            get {
+                return ((int)(this["lastFileBoxIndex"]));
+            }
+            set {
+                this["lastFileBoxIndex"] = value;
+            }
+        }
     }
 }
