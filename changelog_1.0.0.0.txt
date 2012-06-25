@@ -1,0 +1,8 @@
+Data2Serial2 
+===============
+Version 1.0.0.0
+===============
+* First release
+
+===============
+Please keep updating the application
