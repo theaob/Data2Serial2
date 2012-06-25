@@ -80,6 +80,8 @@
             this.button7 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.autoUpdateThread = new System.ComponentModel.BackgroundWorker();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -331,6 +333,7 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(this.checkBox2);
             settingsTab.Controls.Add(this.checkBox1);
             settingsTab.Controls.Add(this.label3);
             settingsTab.Controls.Add(this.button7);
@@ -694,6 +697,21 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(229, 61);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(86, 17);
+            this.checkBox2.TabIndex = 5;
+            this.checkBox2.Text = "Auto Update";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // autoUpdateThread
+            // 
+            this.autoUpdateThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.autoUpdateThread_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,6 +808,8 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.ComponentModel.BackgroundWorker autoUpdateThread;
 
 
     }

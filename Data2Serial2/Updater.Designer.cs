@@ -109,7 +109,7 @@
             this.MaximizeBox = false;
             this.Name = "Updater";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";
             this.Load += new System.EventHandler(this.Updater_Load);
             this.groupBox1.ResumeLayout(false);

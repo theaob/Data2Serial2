@@ -29,6 +29,8 @@ namespace Data2Serial2
         private Color sendButtonTextColor = Settings1.Default.sendButtonTextColor;
         private Color cancelButtonTextColor = Settings1.Default.cancelButtonTextColor;
 
+        String updateFile = "";
+
         Updater updateDialog = new Updater();
         //Used Variables
 
@@ -438,6 +440,12 @@ namespace Data2Serial2
             parityComboBox.SelectedIndex = 0;
 
             checkBox1.Checked = Settings1.Default.howToScroll;
+            checkBox2.Checked = Settings1.Default.autoUpdate;
+
+            if (Settings1.Default.autoUpdate && !autoUpdateThread.IsBusy)
+            {
+                autoUpdateThread.RunWorkerAsync();
+            }
         }
 
         private void loadPortsIntoCombobox()
@@ -720,6 +728,9 @@ namespace Data2Serial2
             sendButtonTextColor = Settings1.Default.sendButtonTextColor;
             cancelButtonColor = Settings1.Default.cancelButtonColor;
             cancelButtonTextColor = Settings1.Default.cancelButtonTextColor;
+
+            checkBox1.Checked = Settings1.Default.howToScroll;
+            checkBox2.Checked = Settings1.Default.autoUpdate;
             colorizeButtons();
         }
 
@@ -787,7 +798,8 @@ namespace Data2Serial2
                     Settings1.Default.terminalBackcolor = Color.Black;
                     Settings1.Default.terminalForecolor = Color.Lime;
 
-
+                    Settings1.Default.autoUpdate = false;
+                    Settings1.Default.howToScroll = false;
 
                     Settings1.Default.Save();
 
@@ -808,6 +820,40 @@ namespace Data2Serial2
             }
             Settings1.Default.howToScroll = checkBox1.Checked;
             Settings1.Default.Save();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings1.Default.autoUpdate = checkBox2.Checked;
+            Settings1.Default.Save();
+        }
+
+        private void autoUpdateThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            System.Net.WebClient client = new System.Net.WebClient();
+
+            try
+            {
+                updateFile = client.DownloadString("http://theaob.github.com/Data2Serial2/update");
+                updateFile = updateFile.Substring(0, updateFile.IndexOf("\n"));
+
+                System.Version onlineVersion = new Version(updateFile);
+                System.Version thisVersion = new Version(version);
+                //System.Reflection.AssemblyVersionAttribute thisVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+                if (onlineVersion > thisVersion)
+                {
+                    showError("There is a new update available");
+                    //button5_Click(sender, e);
+                    updateDialog.ShowDialog();
+                }
+            }
+            catch (System.Net.WebException)
+            {
+            }
+            catch (System.NotSupportedException)
+            {
+            }
         }
     }
 }

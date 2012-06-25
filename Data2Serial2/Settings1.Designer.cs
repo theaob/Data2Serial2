@@ -158,5 +158,17 @@ namespace Data2Serial2 {
                 this["howToScroll"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoUpdate {
+            get {
+                return ((bool)(this["autoUpdate"]));
+            }
+            set {
+                this["autoUpdate"] = value;
+            }
+        }
     }
 }
