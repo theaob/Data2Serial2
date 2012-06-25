@@ -458,6 +458,9 @@ namespace Data2Serial2
 
             checkBox1.Checked = Settings1.Default.howToScroll;
             checkBox2.Checked = Settings1.Default.autoUpdate;
+            checkBox3.Checked = Settings1.Default.isOnTop;
+
+            this.TopMost = checkBox3.Checked;
 
             if (Settings1.Default.autoUpdate && !autoUpdateThread.IsBusy)
             {
@@ -950,6 +953,13 @@ namespace Data2Serial2
             {
                 listBox1.Items.Clear();
             }
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings1.Default.isOnTop = checkBox3.Checked;
+            Settings1.Default.Save();
+            this.TopMost = checkBox3.Checked;
         }
     }
 }

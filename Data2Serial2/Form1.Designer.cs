@@ -88,6 +88,7 @@
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
             this.autoUpdateThread = new System.ComponentModel.BackgroundWorker();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -340,6 +341,7 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(this.checkBox3);
             settingsTab.Controls.Add(this.checkBox2);
             settingsTab.Controls.Add(this.checkBox1);
             settingsTab.Controls.Add(this.label3);
@@ -777,6 +779,17 @@
             // 
             this.autoUpdateThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.autoUpdateThread_DoWork);
             // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(3, 32);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(96, 17);
+            this.checkBox3.TabIndex = 6;
+            this.checkBox3.Text = "Always on Top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -787,6 +800,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Data2Serial2";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             sendTab.ResumeLayout(false);
@@ -883,6 +897,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.CheckBox checkBox3;
 
 
     }

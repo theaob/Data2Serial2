@@ -218,5 +218,17 @@ namespace Data2Serial2 {
                 this["terminalFont"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isOnTop {
+            get {
+                return ((bool)(this["isOnTop"]));
+            }
+            set {
+                this["isOnTop"] = value;
+            }
+        }
     }
 }
