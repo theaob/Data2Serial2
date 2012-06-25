@@ -24,10 +24,10 @@ namespace Data2Serial2
 
         private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
-        private Color cancelButtonColor = Color.Red; //new Color();
-        private Color sendButtonColor = Color.Green;//new Color();
-        private Color sendButtonTextColor = Color.White;
-        private Color cancelButtonTextColor = Color.White;
+        private Color cancelButtonColor = Settings1.Default.cancelButtonColor;
+        private Color sendButtonColor = Settings1.Default.sendButtonColor;
+        private Color sendButtonTextColor = Settings1.Default.sendButtonTextColor;
+        private Color cancelButtonTextColor = Settings1.Default.cancelButtonTextColor;
 
         Updater updateDialog = new Updater();
         //Used Variables
@@ -39,7 +39,7 @@ namespace Data2Serial2
             changeTitle(version);
             addToList("Application ("+version+") opened");
             colorizeButtons();
-
+            refreshColors();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -679,5 +679,47 @@ namespace Data2Serial2
             
             
         }
+
+        private void refreshColors()
+        {
+            linkLabel1.LinkColor = Settings1.Default.clearLinkForecolor;
+            linkLabel1.BackColor = Settings1.Default.terminalBackcolor;
+            listBox1.ForeColor = Settings1.Default.terminalForecolor;
+            listBox1.BackColor = Settings1.Default.terminalBackcolor;
+            sendButtonColor = Settings1.Default.sendButtonColor;
+            sendButtonTextColor = Settings1.Default.sendButtonTextColor;
+            cancelButtonColor = Settings1.Default.cancelButtonColor;
+            cancelButtonTextColor = Settings1.Default.cancelButtonTextColor;
+            colorizeButtons();
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            if (IsTerminalBusy())
+            {
+                showError("You cannot change settings while sending data");
+                return;
+            }
+            else
+            {
+                ColorForm cf = new ColorForm();
+                cf.ShowDialog();
+                refreshColors();
+            }
+        }
+
+
+        private bool IsTerminalBusy()
+        {
+            if (manualSendThread.IsBusy || fileDumpThread.IsBusy || receiveThread.IsBusy)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

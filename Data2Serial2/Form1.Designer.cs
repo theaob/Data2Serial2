@@ -77,6 +77,8 @@
             this.manualSendThread = new System.ComponentModel.BackgroundWorker();
             this.fileDumpThread = new System.ComponentModel.BackgroundWorker();
             this.receiveThread = new System.ComponentModel.BackgroundWorker();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.button6 = new System.Windows.Forms.Button();
             sendTab = new System.Windows.Forms.TabPage();
             settingsTab = new System.Windows.Forms.TabPage();
             comPortTab = new System.Windows.Forms.TabPage();
@@ -338,6 +340,7 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(this.button6);
             settingsTab.Controls.Add(this.button5);
             settingsTab.Location = new System.Drawing.Point(4, 22);
             settingsTab.Name = "settingsTab";
@@ -670,6 +673,16 @@
             this.receiveThread.WorkerSupportsCancellation = true;
             this.receiveThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.receiveThread_DoWork);
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(3, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Colors";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -762,6 +775,8 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button button6;
 
 
     }

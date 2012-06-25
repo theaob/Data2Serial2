@@ -7,3 +7,5 @@ C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial
 C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial2\obj\Debug\Data2Serial2.exe
 C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial2\obj\Debug\Data2Serial2.pdb
 C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial2\obj\Debug\Data2Serial2.Updater.resources
+C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial2\bin\Debug\Data2Serial2.exe.config
+C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\Data2Serial2\Data2Serial2\obj\Debug\Data2Serial2.ColorForm.resources
