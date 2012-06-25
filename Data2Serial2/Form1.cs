@@ -721,8 +721,6 @@ namespace Data2Serial2
 
                         addToListSecure(read.ToString(cix));
                     }
-                    //port.
-                    
                 }
                 catch (TimeoutException)
                 {
@@ -922,6 +920,35 @@ namespace Data2Serial2
             }
             catch (System.NotSupportedException)
             {
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.FileName = "";
+            saveFileDialog1.Filter = "Text File|*.txt|Log File|*.log";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName.Length < 3)
+            {
+                return;
+            }
+
+            TextWriter tw = new StreamWriter(saveFileDialog1.FileName);
+
+            foreach (String line in listBox1.Items)
+            {
+                tw.WriteLine(line);
+            }
+
+            tw.Close();
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 4)
+            {
+                listBox1.Items.Clear();
             }
         }
     }
