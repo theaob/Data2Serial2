@@ -64,6 +64,7 @@ namespace Data2Serial2
 
             String shortName = filename.Substring(filename.LastIndexOf('\\') + 1);
             changeTitle(shortName);
+            button1.Text = shortName;
             addToList("Selected " + shortName);
 
             try
@@ -141,6 +142,12 @@ namespace Data2Serial2
             if (!port.IsOpen)
             {
                 tabControl1.SelectedIndex = 0;
+                return;
+            }
+
+            if ((sendAsByteRadioButton.Checked || sendAsStringRadioButton.Checked) == false)
+            {
+                addToList("Select file send mode!");
                 return;
             }
 
@@ -385,6 +392,11 @@ namespace Data2Serial2
                     return;
                 }
 
+                Settings1.Default.dataBitIndex = dataBitsComboBox.SelectedIndex;
+                Settings1.Default.stopBitIndex = stopBitsComboBox.SelectedIndex;
+                Settings1.Default.parityIndex = parityComboBox.SelectedIndex;
+
+
                 System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
                 String baudRateToCheck = port.BaudRate.ToString(ci);
 
@@ -435,9 +447,9 @@ namespace Data2Serial2
 
             loadPortsIntoCombobox();
             baudRateComboBox.SelectedIndex = Settings1.Default.lastBaudRateIndex;
-            stopBitsComboBox.SelectedIndex = 1;
-            dataBitsComboBox.SelectedIndex = 0;
-            parityComboBox.SelectedIndex = 0;
+            stopBitsComboBox.SelectedIndex = Settings1.Default.stopBitIndex;
+            dataBitsComboBox.SelectedIndex = Settings1.Default.dataBitIndex;
+            parityComboBox.SelectedIndex = Settings1.Default.parityIndex;
 
             checkBox1.Checked = Settings1.Default.howToScroll;
             checkBox2.Checked = Settings1.Default.autoUpdate;
@@ -843,9 +855,17 @@ namespace Data2Serial2
 
                 if (onlineVersion > thisVersion)
                 {
-                    showError("There is a new update available");
-                    //button5_Click(sender, e);
-                    updateDialog.ShowDialog();
+                    DialogResult reply = MessageBox.Show("Do you want to update now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
+
+                    if (reply == DialogResult.Yes)
+                    {
+                        //button5_Click(sender, e);
+                        updateDialog.ShowDialog();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
             catch (System.Net.WebException)

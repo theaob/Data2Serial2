@@ -170,5 +170,41 @@ namespace Data2Serial2 {
                 this["autoUpdate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int parityIndex {
+            get {
+                return ((int)(this["parityIndex"]));
+            }
+            set {
+                this["parityIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int dataBitIndex {
+            get {
+                return ((int)(this["dataBitIndex"]));
+            }
+            set {
+                this["dataBitIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int stopBitIndex {
+            get {
+                return ((int)(this["stopBitIndex"]));
+            }
+            set {
+                this["stopBitIndex"] = value;
+            }
+        }
     }
 }

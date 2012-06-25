@@ -108,6 +108,8 @@ namespace Data2Serial2
             }
             textBox1.Text = e.Result.Replace("\n","\r\n");
 
+            textBox1.Select(0, 0);
+
             button1.Enabled = false;
         }
 
