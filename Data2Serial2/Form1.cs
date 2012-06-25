@@ -168,13 +168,13 @@ namespace Data2Serial2
                 if (IsItAPositiveNumber(textBox1.Text, out delay))
                 {
                     fileDumpThread.RunWorkerAsync(delay);
+
                 }
                 else
                 {
                     fileDumpThread.RunWorkerAsync();
-                    //button2.Text = "Cancel";
-                    buttonTextyColorChange(button2);
                 }
+                buttonTextyColorChange(button2);
             }
         }
 
@@ -288,6 +288,11 @@ namespace Data2Serial2
 
         private void openPortButton_Click(object sender, EventArgs e)
         {
+            if(manualSendThread.IsBusy || fileDumpThread.IsBusy || receiveThread.IsBusy || autoUpdateThread.IsBusy)
+            {
+                showError("Port is busy");
+                return;
+            }
             if (port.IsOpen)
             {
                 port.Close();
