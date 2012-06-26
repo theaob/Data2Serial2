@@ -23,5 +23,12 @@ namespace Data2Serial2
         {
             InitializeComponent();
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            // DragMove handles all the window placement automatically!
+            this.DragMove();
+            base.OnMouseLeftButtonDown(e);
+        }
     }
 }
